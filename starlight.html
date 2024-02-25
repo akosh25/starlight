@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <title>id, class</title>
     <meta charset="UTF-8">
+    <title>csillagfeny</title>
+    <meta name="author" content="Anonymus" />
+    <meta name="description" content="ez a weblap a csillagászatról szól" />
+    <meta name="keywords" content="csillagok, üstökösök, bolygók" />
+    <link rel="icon" href="img/comet.jpg" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="application/javascript">
+        alert("Üdvözlünk az oldalunkon!");
+    </script>
 </head>
 <body>
-    <p id="Stars" class="Photos"> Starlight</p>
-    <h1>Hullócsillagok</h1>
-    <h2>Asztrofotók</h2>
-    <p>Üstökösök és hullócsillagok</p>
-    <img src="stars.jpg" alt="Nincs kép" title="Égbolt" width="200">
+<div id="header">
+    <h1>Csillagfény</h1>
+    <img src="img/stars.jpg" alt="csillag header" />
+</div>
+<div id="nav">
+    <a href="#elso">Üstökösök</a> | <a href="#masodik">Csillagok</a>
+</div>
+<div id="content">
+    <h2 id="elso">Üstökösök</h2>
+    <p>
+        Az üstökösökről azt kell tudni, hogy...
+        <br />
+        <img src="img/stars2.jpg" alt="csillagok2" />
+        <img src="img/stars3.jpg" alt="csillagok3" />
+    </p>
+    <h2 id="masodik">Csillagok</h2>
+    <p>
+        A csillagokról viszont azt kell tudni, hogy...
+        <br />
+        <img src="img/stars4.jpg" alt="csillagok4" />
+    </p>
+</div>
+<div id="footer">
+    <span style="font-weight: bold">Forrás</span> <a href="https://hu.wikipedia.org/wiki/%C3%9Cst%C3%B6k%C3%B6s" target="_blank"></a>
+</div>
 </body>
 </html>
