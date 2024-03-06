@@ -1,5 +1,13 @@
 html{
-    background-color: antiquewhite;
+    background-color:lightblue;
     text-align: center;  
-    padding: 1; 
+    padding: 1px; 
 }
+
+#header{color:rgb(14, 14, 131)}
+
+#content{color:rgb(6,85,6);}
+
+a{color:grey}
+a:visited{color:white}
+a:hover{color:darkgreen}
