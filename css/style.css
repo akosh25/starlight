@@ -1,13 +1,54 @@
 html{
-    background-color:lightblue;
+    background-color:#f0f8ff;
     text-align: center;  
-    padding: 1px; 
+    padding: 5px; 
+    box-sizing: border-box;
 }
 
-#header{color:rgb(14, 14, 131)}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-#content{color:rgb(6,85,6);}
+.picture{
+    width: 400px;
+    height: 300px;
+}
 
-a{color:grey}
-a:visited{color:white}
-a:hover{color:darkgreen}
+h1, h2, h3, p {
+    margin: 10px 0;
+}
+
+#egitestek-table, #egitestek-table th, #egitestek-table td{
+    border: 2px solid black;
+
+}
+#egitestek-table{
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#egitestek-table th, #egitestek-table td{
+    padding: 6px;
+}
+
+#navigation li{
+    background-color: rgba(255, 255, 255, 0.5);
+    display:inline-block;
+    margin-left: 12px;
+}
+
+#navigation{
+    background-color: transparent; 
+    color: #808080; 
+    padding: 6px; 
+}
+
+#header{color:#020243}
+#content{color:#044618;}
+#footer{color:#413838}
+
+a{color:#808080}
+a:visited{color:#696969}
+a:hover{color:#006400}

@@ -8,18 +8,47 @@
     <meta name="keywords" content="csillagok, üstökösök, bolygók" />
     <link rel="icon" href="img/comet.jpg" />
     <link rel="stylesheet" href="css/style.css" />
-    <script type="application/javascript">
-        alert("Üdvözlünk az oldalunkon!");
-    </script>
 </head>
 <body>
 <div id="header">
     <h1>Szegedi asztrofotók</h1>
-    <img src="img/stars.jpg" alt="csillag header" />
+    <strong>Nézz az ég felé...</strong>
+    <br />
+    <img src="img/stars.jpg" alt="csillag header" class="picture" />
 </div>
 <div id="ust">
-    <a href="#elso">Üstökösök</a> | <a href="#masodik">Csillagok</a>
+<ul id="navigation">
+    <li><a href="#elso">Üstökösök</a></li>
+    <li><a href="#masodik">Bolygók</a></li>
+</ul>
 </div>
+<h2>Égitestek</h2>
+<table id="egitestek-table">
+    <!--<caption>csoportosítás</caption>-->
+    <colgroup>
+        <col id="egitestek-table-first-column"/> <col /> 
+        <col style="width: auto;">
+    </colgroup>
+    <thead>
+        <tr>
+            <th id="taxonomic-rank-name">Naprendszerbeli égitestek</th>
+            <th id="taxonomic-rank">Galaxisok</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Bolygók</td>
+            <td>Spirálgalaxisok <i>(pl. Tejút)</i></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td>Üstökösök</td>
+            <td>Elliptikus galaxisok </td>
+        </tr>
+    </tbody>
+</table>
+<br />
 <div id="content">
     <h2 id="elso">Üstökösök</h2>
     <p>
@@ -28,20 +57,25 @@
         és a Nap közelébe érve jellegzetesen fényes kómája és csóvája fejlődik.
         <br />
         <br />
-        <img src="img/stars2.jpg" alt="csillagok2" />
-        <img src="img/stars3.jpg" alt="csillagok3" />
+        <img src="img/comet01.jpg" alt="ustokos1" class="picture" />
+        <img src="img/comet02.jpg" alt="ustokos2" class="picture"/>
     </p>
-    <h2 id="masodik">Csillagok</h2>
+    <h2 id="masodik">Bolygók</h2>
     <p>
-        Olyan égitestek, amely nukleáris energiát termelnek, 
-        így saját fénnyel rendelkeznek.
+        A bolygó olyan jelentősebb tömegű égitest, amely egy csillag vagy egy 
+        csillagmaradvány körül kering, elegendően nagy tömegű ahhoz, hogy 
+        kialakuljon a hidrosztatikai egyensúlyt tükröző közel gömb alak, 
+        viszont nem lehet elég nagy tömegű ahhoz, hogy belsejében meginduljon a magfúzió és ezáltal saját fénye legyen
         <br />
         <br />
-        <img src="img/stars4.jpg" alt="csillagok4" />
+        <img src="img/planet01.jpg" alt="bolygok1" class="picture" />
+        <img src="img/planet02.jpg" alt="bolygok2" class="picture" />
     </p>
 </div>
 <div id="footer">
     <span style="font-weight: bold">Forrás</span> <a href="https://hu.wikipedia.org/wiki/%C3%9Cst%C3%B6k%C3%B6s" target="_blank">Wikipedia</a>
+    <br />
+    Kulcsszavak: <b>Bolygók</b><b>Csillagok</b><b>Üstökösök</b>
 </div>
 </body> 
 </html>
