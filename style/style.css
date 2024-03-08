@@ -20,29 +20,24 @@ h1, h2, h3, p {
     margin: 10px 0;
 }
 
-#egitestek-table, #egitestek-table th, #egitestek-table td{
-    border: 2px solid black;
 
-}
-#egitestek-table{
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-#egitestek-table th, #egitestek-table td{
-    padding: 6px;
-}
-
-#navigation li{
+.navigation li {
     background-color: rgba(255, 255, 255, 0.5);
-    display:inline-block;
+    display: inline;
     margin-left: 12px;
+    border-right: 1px solid #808080; /* Elválasztó vonal hozzáadása */
+    padding-right: 10px; /* Opcionálisan szélesebb tér az elválasztó vonal után */
 }
 
-#navigation{
-    background-color: transparent; 
-    color: #808080; 
-    padding: 6px; 
+
+.navigation li:last-child {
+    border-right: none; /* Az utolsó listaelemnél ne legyen jobb oldali vonal */
+}
+
+#navigation {
+    background-color: transparent;
+    color: #808080;
+    padding: 6px;
 }
 
 #header{color:#020243}
