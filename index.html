@@ -9,20 +9,32 @@
     <link rel="icon" href="logo/comet.jpg" />
     <link rel="stylesheet" href="style/style.css" />
     <script>
-        function toggleDarkMode() {
+        function toggleMode() {
             var element = document.body;
-            element.classList.toggle("dark-mode");
-        }
-
-        function toggleLightMode() {
-            var element = document.body;
-            element.classList.toggle("light-mode");
+            if (element.classList.contains("dark-mode")) {
+                element.classList.remove("dark-mode");
+                element.classList.add("light-mode");
+            } else {
+                element.classList.remove("light-mode");
+                element.classList.add("dark-mode");
+            }
         }
     </script>
 </head>
 
 
 <body>
+    <header>
+        <div class="menu-bar">
+            <nav>
+                <ul role="list" class="nav-list">
+                    <li><a aria-current="page" href="index.html">Asztro fotók</a></li>
+                    <li><a href="upload_form.html">Asztrofotó beküldés</a></li>
+                    <li><a href="contact.html">Kapcsolat</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
     <div id="header">
         <h1>Szegedi asztrofotók</h1>
         <strong>Nézz az ég felé...</strong>
@@ -120,7 +132,6 @@
     Kulcsszavak: <b>Bolygók</b><b>Csillagok</b><b>Galaxisok</b><b>Meteorok</b>
 </div>
 
-<button onclick="toggleDarkMode()">Sötét mód</button>
-<button onclick="toggleLightMode()">Világos mód</button>
+<button onclick="toggleMode()">Stílus váltás</button>
 </body> 
 </html>

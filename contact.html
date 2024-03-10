@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Kapcsolat</title>
+    <meta name="author" content="Anonymus" />
+    <meta name="description" content="minden ami csillagászat" />
+    <meta name="keywords" content="csillagok, üstökösök, bolygók" />
+    <link rel="icon" href="logo/comet.jpg" />
+    <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+<main>
+    <div class="menu-bar">
+        <nav>
+            <ul role="list" class="nav-list">
+                <li><a aria-current="page" href="index.html">Asztro fotók</a></li>
+                <li><a href="upload_form.html">Asztrofotó beküldés</a></li>
+                <li><a href="contact.html">Kapcsolat</a></li>
+            </ul>
+        </nav>
+    </div>
+    <h1>Kapcsolat</h1>
+    <form action="kapcsolat-feldolgoz.html" method="post" enctype="multipart/form-data">
+        <label for="name">Név:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email cím:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">Üzenet:</label>
+        <textarea id="message" name="message" maxlength="300" rows="10" required></textarea>
+        <button type="submit">Küldés</button>
+    </form>
+</main>
+<br>
+<footer>
+    Minden jog fenntartva! &copy; 2024 Starlight
+</footer>
+</body>
