@@ -47,3 +47,13 @@ h1, h2, h3, p {
 a{color:#808080}
 a:visited{color:#696969}
 a:hover{color:#006400}
+
+.audio-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.audio-container p {
+    font-style: italic;
+    color: #808080;
+}
