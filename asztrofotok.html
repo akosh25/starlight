@@ -8,6 +8,17 @@
     <meta name="keywords" content="csillagok, üstökösök, bolygók" />
     <link rel="icon" href="logo/comet.jpg" />
     <link rel="stylesheet" href="style/style.css" />
+    <script>
+        function toggleDarkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+
+        function toggleLightMode() {
+            var element = document.body;
+            element.classList.toggle("light-mode");
+        }
+    </script>
 </head>
 
 
@@ -108,5 +119,8 @@
     <br />
     Kulcsszavak: <b>Bolygók</b><b>Csillagok</b><b>Galaxisok</b><b>Meteorok</b>
 </div>
+
+<button onclick="toggleDarkMode()">Sötét mód</button>
+<button onclick="toggleLightMode()">Világos mód</button>
 </body> 
 </html>
