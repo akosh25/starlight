@@ -12,29 +12,29 @@
 </head>
 
 <body>
-    <div class="menu-bar">
-        <nav>
-            <ul role="list" class="nav-list">
-                <li><a aria-current="page" href="index.html">Asztro fotók</a></li>
-                <li><a href="upload_form.html">Asztrofotó beküldés</a></li>
-                <li><a href="contact.html">Kapcsolat</a></li>
-            </ul>
-        </nav>
-    </div>
+    <header>
+        <div class="menu-bar">
+            <nav>
+                <ul role="list" class="nav-list">
+                    <li><a aria-current="page" href="index.html" class="menu-item">Asztro fotók</a></li>
+                    <li><a href="upload_form.html" class="menu-item">Asztrofotó beküldés</a></li>
+                    <li><a href="contact.html" class="menu-item">Kapcsolat</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
     <h1>Asztrofotó beküldés</h1>
     <h3>Kérjük töltse ki a következő űrlapot!</h3>
     <div class="audio-container">
         <audio controls>
             <source src="audio/smooching.mp3" type="audio/mpeg"/>
-            "A böngésződ nem támogatja a hanglejátszást."
+            <span>A böngésződ nem támogatja a hanglejátszást.</span>
         </audio>
         <p class="audio-description">Az űrlap kitöltéséhez hangulatzene indítását javasoljuk.</p>
     </div>
 
     <form action="upload_form.html" method="post" enctype="multipart/form-data" autocomplete="off">
         <label>Név: <input type="text" name="nev" size="25px"></label>
-        <br/>
-        <label>Jelszó: <input type="password" name="pass" maxlength="15" placeholder="**********" disabled></label>
         <br/>
         <label>Mikor készült a kép?: <input type="date" name="fotodatum"></label>
         <br/>
@@ -56,7 +56,7 @@
             <option value="timelapse">Asztrofotós timelapsek</option>  
         </select>
         <br/>
-        <label>A kép címe: <textarea name="bemutat" maxlength="30" rows="1"></textarea></label>
+        <label>A kép címe: <input type="text" name="kep-cime" maxlength="50"></label>
         <br/>
         <br/>
         <fieldset>

@@ -14,29 +14,48 @@ body {
 .picture{
     width: 400px;
     height: 300px;
+    margin: 10px;
 }
-
+h1 {
+    font-size: 24px;
+}
 h1, h2, h3, p {
     margin: 10px 0;
 }
 
 .menu-bar {
-    background-color: #333; 
-    padding: 10px; 
-    display: flex; /
-    justify-content: space-between; 
-    align-items: center; 
+    background-color: #eee; /* Világosabb háttérszín */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position:fixed;
+    top:0;
+    right: 0;
+    left: 0;
+
+}
+
+.menu-item {
+    background-color: #555;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
 .nav-list {
     list-style: none; 
     padding: 0; 
     margin: 0;
-    display: flex; 
 }
 
 .nav-list li {
-    margin-right: 20px; 
+    display: inline-block;
+    margin-bottom: 5px;
+     
 }
 
 .nav-list li:last-child {
@@ -44,13 +63,20 @@ h1, h2, h3, p {
 }
 
 .nav-list li a {
-    color: #fff; 
+    color: #333; 
+    background-color: #f0f0f0;
     text-decoration: none; 
-    transition: color 0.3s; /* átmenet a szövegszín megváltoztatásához */
+    transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 .nav-list li a:hover {
     color: #ffcc00; /* szövegszín változtatása, amikor az egér fölötte van */
+    background-color: #555;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
@@ -132,6 +158,11 @@ audio p {
 textarea {
     max-width: 60%;
     width: 60%;
+    min-height: 100px;
     padding: 10px;
-    box-sizing: border-box; /* Ez biztosítja, hogy a padding ne változtassa meg a méretet */
+    resize: vertical;
+    overflow: hidden;
 }
+
+
+
