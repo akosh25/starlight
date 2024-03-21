@@ -14,11 +14,16 @@ body {
 }
 
 h1, h2, h3, p {
-    margin: 10px 0;
+    margin: 40px 0;
 }
 
 .menu-bar, .menu-item, .nav-list li a, .navigation li {
+    overflow: auto;
+    float: left;
     border-radius: 10px;
+    display: flex; /* Flexbox elrendezés használata */
+    justify-content: space-between;
+    padding: 10px 20px;
 }
 
 /* Színek */
@@ -86,7 +91,7 @@ h1, h2, h3, p {
 }
 
 .nav-list li a:hover {
-    color: #ffcc00; /* szövegszín változtatása, amikor az egér fölötte van */
+    color: #ffcc00; 
     background-color: #555;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
@@ -108,11 +113,11 @@ h1, h2, h3, p {
     margin-left: 12px;
     border-right: 1px solid #808080;
     padding-right: 10px;
-    display: inline-block; /* Módosítás: inline-block-ra változtatva */
+    display: inline-block; 
 }
 
 .navigation li:first-child {
-    margin-left: 0; /* Az első elemnek nincs bal margója */
+    margin-left: 0; 
 }
 
 .navigation li:last-child {
@@ -250,4 +255,30 @@ textarea {
         border-right: none; 
         padding-right: 0; 
     }
+}
+
+/* Dark Mode gomb stílusai */
+
+#theme-toggle {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#theme-toggle:hover {
+    background-color: #555;
+}
+
+#theme-toggle:checked + label {
+    background-color: #333; /* Háttérszín fekete */
+    color: #fff; /* Betűszín fehér */
+}
+#theme-toggle:checked ~ html {
+    background-color: #222; /* Lap háttere fekete */
+    color: #fff; /* Betűszín fehér */
 }
