@@ -1,7 +1,8 @@
-html{
-    background-color:#f0f8ff;
-    text-align: center;  
-    padding: 5px; 
+/* Általános stílusok */
+html {
+    background-color: #f0f8ff;
+    text-align: center;
+    padding: 5px;
     box-sizing: border-box;
 }
 
@@ -10,52 +11,19 @@ body {
     margin: 0;
     padding: 0;
     margin-top: 80px;
-    
 }
 
-.picture{
-    opacity: 0;
-    transform: translateY(50px);
-    animation: fadeInUp 0.5s ease forwards;
-    width: 400px;
-    height: 300px;
-    margin: 10px;
-}
-@keyframes fadeInUp {
-    from {
-        opacity: 0; 
-        transform: translateY(50px); 
-    }
-    to {
-        opacity: 1; 
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-.icon-slide-in {
-    animation: slideIn 2s ease-out forwards;
-}
-
-h1 {
-    font-size: 24px;
-}
 h1, h2, h3, p {
     margin: 10px 0;
 }
 
+.menu-bar, .menu-item, .nav-list li a, .navigation li {
+    border-radius: 10px;
+}
+
+/* Színek */
 .menu-bar {
-    background-color: #eee; /* Világosabb háttérszín */
+    background-color: #eee; 
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -128,17 +96,27 @@ h1, h2, h3, p {
     font-weight: bold;
 }
 
-.navigation li {
-    background-color: rgba(255, 255, 255, 0.5);
-    display: inline;
-    margin-left: 12px;
-    border-right: 1px solid #808080; /* Elválasztó vonal hozzáadása */
-    padding-right: 10px; /* Opcionálisan szélesebb tér az elválasztó vonal után */
+.navigation {
+    display: flex; 
+    list-style: none;
+    padding: 0;
+    justify-content: center; 
 }
 
+.navigation li {
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-left: 12px;
+    border-right: 1px solid #808080;
+    padding-right: 10px;
+    display: inline-block; /* Módosítás: inline-block-ra változtatva */
+}
+
+.navigation li:first-child {
+    margin-left: 0; /* Az első elemnek nincs bal margója */
+}
 
 .navigation li:last-child {
-    border-right: none; /* Az utolsó listaelemnél ne legyen jobb oldali vonal */
+    border-right: none;
 }
 
 #navigation {
@@ -147,49 +125,100 @@ h1, h2, h3, p {
     padding: 6px;
 }
 
-#header{color:#020243}
-#content{color:#044618;}
-#footer{color:#413838}
-
-a{color:#808080}
-a:visited{color:#696969}
-a:hover{color:#006400}
-
-.audio-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
+/* Animációk */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Középre igazítás */
+.menu-bar, .form-section, .audio-container {
+    justify-self: center;
+    align-self: center;
+}
+
+/* Egyéb stílusok */
+.picture {
+    width: 400px;
+    height: 300px;
+    margin: 10px;
+}
+
+.picture:first-child {
+    z-index: 2;
+}
+
+#header {
+    clear: both;
+}
+
+#header { color: #020243; }
+#content { color: #044618; }
+#footer { color: #413838; }
+
+#astro-title {
+    font-size: 28px;
+    color: #020243;
+    margin-top: 20px;
+}
+
+a { color: #808080; }
+a:visited { color: #696969; }
+a:hover { color: #006400; }
 
 .audio-container p {
     font-style: italic;
     color: #808080;
 }
 
-
-input{
-    margin: 10px
+input {
+    margin: 10px;
 }
-input:required{
+
+input:required {
     background-color: #ffffff;
 }
-input:optional,textarea:optional{
+
+input:optional, textarea:optional {
     background-color: #f0f0f0;
 }
-input:focus,textarea:focus{
+
+input:focus, textarea:focus {
     background-color: #add8e6;
 }
+
 .intro-text {
     font-weight: bold;
     font-style: italic;
 }
+
 audio {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
 audio p {
     font-style: italic;
     color: #808080;
 }
+
 textarea {
     max-width: 60%;
     width: 60%;
@@ -199,3 +228,26 @@ textarea {
     overflow: hidden;
 }
 
+#source-title::before {
+    content: " ";
+}
+
+/* Responszív design */
+@media only screen and (max-width: 600px) {
+    .menu-bar {
+        flex-direction: column; 
+        position: static;
+    }
+    
+    .menu-item, .nav-list li a, .navigation li {
+        display: block; 
+        width: 100%; 
+        margin-bottom: 10px; 
+    }
+
+    .navigation li {
+        margin-left: 0; 
+        border-right: none; 
+        padding-right: 0; 
+    }
+}

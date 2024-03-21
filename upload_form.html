@@ -34,18 +34,20 @@
     </div>
 
     <form action="upload_form.html" method="post" enctype="multipart/form-data" autocomplete="off">
-        <label>Név: <input type="text" name="nev" size="25px"></label>
+        
+        <label for="nev">Név: <input type="text" name="nev" size="25px"></label>
         <br/>
-        <label>Mikor készült a kép?: <input type="date" name="fotodatum"></label>
+        <label for="fotodatum">Mikor készült a kép?: <input type="date" name="fotodatum"></label>
         <br/>
-        <label>E-mail-cím: <input type="email" name="email" placeholder="valami@valami.hu"></label>
+        <label for="email">E-mail-cím: <input type="email" name="email" placeholder="valami@valami.hu"></label>
         <br/>
-        <label>Mobilszám: <input type="tel" name="tel"></label>
+        <label for="tel">Mobilszám: <input type="tel" name="tel"></label>
         <br/>
-        <label>Fájl feltöltés: <input type="file" name="file"></label>
+        <label for="file">Fájl feltöltés: <input type="file" name="file"></label>
         <br/>
         <label for="kategoriak"></label>
         <br/>
+        <label for="kategoriak">Válassz kategóriát:</label>
         <select name="kategoriak" id="kategoriak">
             <option value="valasz">Válasz kategóriát</option>    
             <option value="csillagok">Csillagok és csillagképek</option>    
@@ -56,18 +58,20 @@
             <option value="timelapse">Asztrofotós timelapsek</option>  
         </select>
         <br/>
-        <label>A kép címe: <input type="text" name="kep-cime" maxlength="50"></label>
+        <label for="kep-cime">A kép címe: <input type="text" name="kep-cime" maxlength="50"></label>
         <br/>
         <br/>
+        <div class="form-section">
         <fieldset>
             <legend>Mikor készült a fotó?</legend>
-            <label>Tavasz<input type="radio" name="evszakok" value="tavasz"></label>
-            <label>Nyár<input type="radio" name="evszakok" value="nyar"></label>
-            <label>Ősz<input type="radio" name="evszakok" value="osz"></label>
-            <label>Tél<input type="radio" name="evszakok" value="tel"></label>
+            <label for="tavasz">Tavasz<input type="radio" name="evszakok" value="tavasz"></label>
+            <label for="nyar">Nyár<input type="radio" name="evszakok" value="nyar"></label>
+            <label for="osz">Ősz<input type="radio" name="evszakok" value="osz"></label>
+            <label for="tel">Tél<input type="radio" name="evszakok" value="tel"></label>
         </fieldset>
+        </div>
         <br/>
-        <label>Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box"></label>
+        <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box"></label>
         <br/>
         <br/>
         <input type="reset" name="reset" value="Visszaállítás">
