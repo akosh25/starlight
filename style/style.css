@@ -14,10 +14,39 @@ body {
 }
 
 .picture{
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 0.5s ease forwards;
     width: 400px;
     height: 300px;
     margin: 10px;
 }
+@keyframes fadeInUp {
+    from {
+        opacity: 0; 
+        transform: translateY(50px); 
+    }
+    to {
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.icon-slide-in {
+    animation: slideIn 2s ease-out forwards;
+}
+
 h1 {
     font-size: 24px;
 }
@@ -46,6 +75,19 @@ h1, h2, h3, p {
     border-radius: 10px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #ffcc00;
+    color: #000;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.menu-item.active {
+    background-color: #555; 
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(165, 92, 131, 0.5); 
+    border-radius: 5px; 
 }
 
 .nav-list {
@@ -123,15 +165,6 @@ a:hover{color:#006400}
     color: #808080;
 }
 
-.light-mode {
-    background-color: white;
-    color: black !important; 
-}
-
-.dark-mode {
-    background-color: black;
-    color: white !important; 
-}
 
 input{
     margin: 10px
@@ -165,6 +198,4 @@ textarea {
     resize: vertical;
     overflow: hidden;
 }
-
-
 
