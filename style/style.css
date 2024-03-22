@@ -20,7 +20,7 @@ h1, h2, h3, p {
     overflow: auto;
     float: left;
     border-radius: 10px;
-    display: flex; /* Flexbox elrendezés használata */
+    display: flex; 
     justify-content: space-between;
     padding: 10px 20px;
 }
@@ -169,17 +169,12 @@ h1, h2, h3, p {
     z-index: 2;
 }
 
-
-
 #astro-title {
     font-size: 28px;
     margin-top: 20px;
 }
 
-
 a:hover { color: #03FFC0; }
-
-
 
 input {
     margin: 10px;
@@ -265,7 +260,7 @@ textarea {
     height: 30px;
     border-radius: 30px;
     background-color: #333;
-    color: white; /* A betűszín itt fehér lesz */
+    color: white; 
     position: fixed;
     top: 50px;
     right: 50px;
@@ -306,7 +301,7 @@ textarea {
   color: #EEE;
 }
 #toggle:checked ~ * {
-    color: #fff; /* Az összes elem betűszíne fehér lesz */
+    color: #fff;
 }
 #toggle:checked ~ .toggle-container {
     color: #EEE;
