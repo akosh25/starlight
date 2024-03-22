@@ -1,6 +1,5 @@
 /* Általános stílusok */
 html {
-    background-color: #f0f8ff;
     text-align: center;
     padding: 5px;
     box-sizing: border-box;
@@ -170,28 +169,17 @@ h1, h2, h3, p {
     z-index: 2;
 }
 
-#header {
-    clear: both;
-}
 
-#header { color: #020243; }
-#content { color: #044618; }
-#footer { color: #413838; }
 
 #astro-title {
     font-size: 28px;
-    color: #020243;
     margin-top: 20px;
 }
 
-a { color: #808080; }
-a:visited { color: #696969; }
-a:hover { color: #006400; }
 
-.audio-container p {
-    font-style: italic;
-    color: #808080;
-}
+a:hover { color: #03FFC0; }
+
+
 
 input {
     margin: 10px;
@@ -214,15 +202,16 @@ input:focus, textarea:focus {
     font-style: italic;
 }
 
+.audio-container p {
+    font-style: italic;
+    color: #808080;
+}
+
 audio {
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-audio p {
-    font-style: italic;
-    color: #808080;
-}
 
 textarea {
     max-width: 60%;
@@ -257,28 +246,68 @@ textarea {
     }
 }
 
-/* Dark Mode gomb stílusai */
+/* Toggle mode */
+.toggle-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 10px;
+    background-color: #cee5ec;
+    color: #333;
+    transition: all 0.4s ease-out;
+  }
 
-#theme-toggle {
+  /* Toggle Button */
+  #toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 60px;
+    height: 30px;
+    border-radius: 30px;
     background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 16px;
-    font-size: 14px;
+    color: white; /* A betűszín itt fehér lesz */
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    transition: all 0.5s ease-in;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
+    z-index: 1;
+  }
+  
+  /* Making a dot switch inside the Toggle Button */
+  #toggle::before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #EEE;
+    color: black;
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    transform: translateY(-50%);
+    transition: all 0.5s ease-in;
+  }
+  
+  /* Changing toggle button background when checked */
+  #toggle:checked {
+    background: #03FFC0;
+  }
+  
+  /* Changing dot switch color and moving to the right side when checked */
+  #toggle:checked::before {
+    background: #333;
+    color: white;
+    left: 32px;
+  }
 
-#theme-toggle:hover {
-    background-color: #555;
+  #toggle:checked ~ .container {
+  background-color: #333;
+  color: #EEE;
 }
-
-#theme-toggle:checked + label {
-    background-color: #333; /* Háttérszín fekete */
-    color: #fff; /* Betűszín fehér */
+#toggle:checked ~ * {
+    color: #fff; /* Az összes elem betűszíne fehér lesz */
 }
-#theme-toggle:checked ~ html {
-    background-color: #222; /* Lap háttere fekete */
-    color: #fff; /* Betűszín fehér */
+#toggle:checked ~ .toggle-container {
+    color: #EEE;
 }
