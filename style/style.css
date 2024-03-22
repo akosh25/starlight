@@ -16,16 +16,12 @@ h1, h2, h3, p {
     margin: 40px 0;
 }
 
-.menu-bar, .menu-item, .nav-list li a, .navigation li {
-    overflow: auto;
-    float: left;
-    border-radius: 10px;
-    display: flex; 
-    justify-content: space-between;
-    padding: 10px 20px;
+#astro-title {
+    font-size: 28px;
+    margin-top: 20px;
 }
 
-/* Színek */
+/* Menüsáv */
 .menu-bar {
     background-color: #eee; 
     padding: 10px;
@@ -38,7 +34,8 @@ h1, h2, h3, p {
     top:0;
     right: 0;
     left: 0;
-
+    justify-self: center;
+    align-self: center;
 }
 
 .menu-item {
@@ -62,6 +59,12 @@ h1, h2, h3, p {
     border-radius: 5px; 
 }
 
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Navigációs menü */
 .nav-list {
     list-style: none; 
     padding: 0; 
@@ -95,16 +98,17 @@ h1, h2, h3, p {
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
 .navigation {
     display: flex; 
     list-style: none;
     padding: 0;
     justify-content: center; 
+}
+
+#navigation {
+    background-color: transparent;
+    color: #808080;
+    padding: 6px;
 }
 
 .navigation li {
@@ -113,6 +117,7 @@ h1, h2, h3, p {
     border-right: 1px solid #808080;
     padding-right: 10px;
     display: inline-block; 
+    margin: 0 5px;
 }
 
 .navigation li:first-child {
@@ -123,11 +128,6 @@ h1, h2, h3, p {
     border-right: none;
 }
 
-#navigation {
-    background-color: transparent;
-    color: #808080;
-    padding: 6px;
-}
 
 /* Animációk */
 @keyframes fadeInUp {
@@ -152,13 +152,7 @@ h1, h2, h3, p {
     }
 }
 
-/* Középre igazítás */
-.menu-bar, .form-section, .audio-container {
-    justify-self: center;
-    align-self: center;
-}
-
-/* Egyéb stílusok */
+/* Képek */
 .picture {
     width: 400px;
     height: 300px;
@@ -169,12 +163,13 @@ h1, h2, h3, p {
     z-index: 2;
 }
 
-#astro-title {
-    font-size: 28px;
-    margin-top: 20px;
-}
-
 a:hover { color: #03FFC0; }
+
+/* form */
+.form-section {
+    justify-self: center;
+    align-self: center;
+}
 
 input {
     margin: 10px;
@@ -198,6 +193,8 @@ input:focus, textarea:focus {
 }
 
 .audio-container p {
+    justify-self: center;
+    align-self: center;
     font-style: italic;
     color: #808080;
 }
@@ -223,28 +220,22 @@ textarea {
 
 /* Responszív design */
 @media only screen and (max-width: 600px) {
-    .menu-bar {
-        flex-direction: column; 
-        position: static;
-    }
-    
-    .menu-item, .nav-list li a, .navigation li {
-        display: block; 
-        width: 100%; 
-        margin-bottom: 10px; 
+    .navigation {
+        flex-wrap: wrap; 
+        justify-content: flex-start; 
     }
 
     .navigation li {
-        margin-left: 0; 
-        border-right: none; 
-        padding-right: 0; 
+        margin: 5px; 
     }
 }
 
-/* Toggle mode */
+/* sötét/világos mód */
 .toggle-container {
     width: 100%;
     min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 10px;
     background-color: #cee5ec;
     color: #333;
@@ -269,7 +260,6 @@ textarea {
     z-index: 1;
   }
   
-  /* Making a dot switch inside the Toggle Button */
   #toggle::before {
     content: "";
     width: 25px;
@@ -284,12 +274,10 @@ textarea {
     transition: all 0.5s ease-in;
   }
   
-  /* Changing toggle button background when checked */
   #toggle:checked {
     background: #03FFC0;
   }
   
-  /* Changing dot switch color and moving to the right side when checked */
   #toggle:checked::before {
     background: #333;
     color: white;
