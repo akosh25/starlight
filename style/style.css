@@ -153,6 +153,8 @@ h1, h2, h3, p {
 }
 
 /* Képek */
+
+
 .picture {
     width: 400px;
     height: 300px;
@@ -161,9 +163,14 @@ h1, h2, h3, p {
 
 .picture:first-child {
     z-index: 2;
+    animation: fadeInUp 3s ease forwards;
 }
 
-a:hover { color: #03FFC0; }
+.picture.fadeInUpFirst {
+    animation: fadeInUp 3s ease forwards;
+}
+
+a:hover { color: #359a80; }
 
 /* form */
 .form-section {
@@ -231,7 +238,7 @@ textarea {
 }
 
 /* sötét/világos mód */
-.toggle-container {
+.container {
     width: 100%;
     min-height: 100vh;
     max-width: 1200px;
@@ -291,6 +298,40 @@ textarea {
 #toggle:checked ~ * {
     color: #fff;
 }
-#toggle:checked ~ .toggle-container {
+#toggle:checked ~ .container {
     color: #EEE;
+}
+
+@media print {
+    /* Általános stílusok a nyomtatáshoz */
+    body {
+        margin: 10;
+        padding: 10;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    h1, h2, h3, p {
+        margin: 0;
+    }
+
+    .menu-bar, #toggle {
+        display: none;
+    }
+
+    .navigation {
+        display: none !important;
+    }
+
+    .icon-label {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-weight: bold;
+
+    }
+    
+    .icon-label img {
+        width: 20px;
+        height: 20px;
+        margin-left: 5px; 
+    }
 }
