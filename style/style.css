@@ -170,6 +170,24 @@ h1, h2, h3, p {
     animation: fadeInUp 3s ease forwards;
 }
 
+.email-icon {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+
+}
+
+.email-icon img {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px; 
+}
+
+.email-icon.fadeInUpFirst {
+    animation: fadeInUp 3s ease forwards;
+}
+
+
 a:hover { color: #359a80; }
 
 /* form */
@@ -302,6 +320,8 @@ textarea {
     color: #EEE;
 }
 
+
+
 @media print {
     /* Általános stílusok a nyomtatáshoz */
     body {
@@ -321,17 +341,6 @@ textarea {
     .navigation {
         display: none !important;
     }
-
-    .icon-label {
-        display: inline-block;
-        margin-bottom: 10px;
-        font-weight: bold;
-
-    }
-    
-    .icon-label img {
-        width: 20px;
-        height: 20px;
-        margin-left: 5px; 
-    }
 }
+
+    
