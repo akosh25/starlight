@@ -17,10 +17,10 @@
             <nav>
                 <ul role="list" class="nav-list">
                     <li><a href="index.html" class="menu-item">Asztro fotók</a></li>
+                    <li><a href="amateur.html" class="menu-item">Információk érdeklődőknek</a></li>
+                    <li><a href="egyesulet.html" class="menu-item">Egyesületi élet</a></li>
                     <li><a href="upload_form.html" class="menu-item active">Asztrofotó beküldés</a></li>
                     <li><a href="contact.html" class="menu-item">Kapcsolat</a></li>
-                    <li><a href="amateur.html" class="menu-item">Információk érdeklődőknek</a></li>
-                     <li><a href="egyesulet.html" class="menu-item">Egyesületi élet</a></li>
                     <li></li>
                 </ul>
             </nav>
@@ -29,7 +29,7 @@
     <input type="checkbox" id="toggle">
     <div class="container container">
     <h1>Asztrofotó beküldés</h1>
-    <h3>Kérjük töltse ki a következő űrlapot!</h3>
+    <h3 id="form-title">Kérjük töltse ki a következő űrlapot!</h3>
     <div class="audio-container">
         <audio controls>
             <source src="audio/smooching.mp3" type="audio/mpeg"/>
@@ -44,7 +44,7 @@
         <br/>
         <label for="fotodatum">Mikor készült a kép?: <input type="date" name="fotodatum"></label>
         <br/>
-        <label for="email">E-mail-cím: <input type="email" name="email" placeholder="valami@valami.hu"></label>
+        <label for="email">E-mail-cím: <input type="email" name="email" placeholder="James@Webb.com"></label>
         <br/>
         <label for="tel">Mobilszám: <input type="tel" name="tel"></label>
         <br/>
@@ -79,9 +79,9 @@
         <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box"></label>
         <br/>
         <br/>
-        <input type="reset" name="reset" value="Visszaállítás">
+        <input type="reset" name="reset" value="Visszaállítás" class="button-interaction">
         <br/>
-        <input type="submit" name="submit" value="Beküldés">
+        <input type="submit" name="submit" value="Beküldés" class="button-interaction">
         <br/>
     </form>
 </body>

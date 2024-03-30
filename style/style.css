@@ -10,12 +10,12 @@ body {
     margin: 0;
     padding: 0;
     margin-top: 80px;
+    background-color: #cee5ec;
 }
 
 h1, h2, h3, p {
     margin: 40px 0;
 }
-
 
 #astro-title {
     font-size: 28px;
@@ -60,11 +60,6 @@ h1, h2, h3, p {
     border-radius: 5px; 
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
 /* Navigációs menü */
 .nav-list {
     list-style: none; 
@@ -75,7 +70,6 @@ h1, h2, h3, p {
 .nav-list li {
     display: inline-block;
     margin-bottom: 5px;
-     
 }
 
 .nav-list li:last-child {
@@ -129,6 +123,8 @@ h1, h2, h3, p {
     border-right: none;
 }
 
+#form-title{animation: fadeInOut 4s linear infinite;
+}
 
 /* Animációk */
 @keyframes fadeInUp {
@@ -139,6 +135,18 @@ h1, h2, h3, p {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }
 
@@ -153,9 +161,27 @@ h1, h2, h3, p {
     }
 }
 
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.button-interaction {
+    transition: transform 0.2s ease;
+}
+
+.button-interaction:hover {
+    transform: scale(1.1);
+}
+
 /* Képek */
-
-
 .picture {
     width: 400px;
     height: 300px;
@@ -171,11 +197,15 @@ h1, h2, h3, p {
     animation: fadeInUp 3s ease forwards;
 }
 
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .email-icon {
     display: inline-block;
     margin-bottom: 10px;
     font-weight: bold;
-
 }
 
 .email-icon img {
@@ -187,7 +217,6 @@ h1, h2, h3, p {
 .email-icon.fadeInUpFirst {
     animation: fadeInUp 3s ease forwards;
 }
-
 
 a:hover { color: #359a80; }
 
@@ -218,6 +247,7 @@ input:focus, textarea:focus {
     font-style: italic;
 }
 
+/* audio */
 .audio-container p {
     justify-self: center;
     align-self: center;
@@ -242,6 +272,12 @@ textarea {
 
 #source-title::before {
     content: " ";
+}
+
+.contact-background {
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
+    animation: backgroundAnimation 10s ease infinite;
 }
 
 /* Responszív design */
@@ -321,7 +357,12 @@ textarea {
     color: #EEE;
 }
 
-
+footer {
+    padding: 5px;
+    text-align: center;
+    background-color: inherit;
+    font-size: 14px;
+}
 
 @media print {
     /* Általános stílusok a nyomtatáshoz */
