@@ -188,6 +188,12 @@ h1, h2, h3, p {
     margin: 10px;
 }
 
+.picture2 {
+   
+    height: 300px;
+    margin: 10px;
+}
+
 .picture:first-child {
     z-index: 2;
     animation: fadeInUp 3s ease forwards;
