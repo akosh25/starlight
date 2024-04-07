@@ -1,0 +1,1 @@
+<footer>Minden jog fenntartva! &copy; 2024 Starlight</footer>

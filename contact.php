@@ -15,11 +15,13 @@
         <div class="menu-bar">
             <nav>
                 <ul class="nav-list">
-                    <li><a href="index.html" class="menu-item">Asztro fotók</a></li>
-                    <li><a href="amateur.html" class="menu-item">Információk érdeklődőknek</a></li>
-                    <li><a href="egyesulet.html" class="menu-item">Egyesületi élet</a></li>
-                    <li><a href="upload_form.html" class="menu-item">Asztrofotó beküldés</a></li>
-                    <li><a href="contact.html" class="menu-item active">Kapcsolat</a></li>
+                    <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
+                    <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
+                    <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+                    <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
+                    <li><a href="register.php" class="menu-item">Regisztráció</a></li>
+                    <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
+                    <li><a href="contact.php" class="menu-item active">Kapcsolat</a></li>
                 </ul>
             </nav>
         </div>
@@ -38,8 +40,7 @@
         <button type="submit">Küldés</button>
     </form>
 </main>
-<footer class="contact-background">
-    Minden jog fenntartva! &copy; 2024 Starlight
-</footer>
+
+<?php include "footer.php"?>
 </body> 
 </html>
