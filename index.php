@@ -28,7 +28,6 @@
         </div>
     </header>
     <input type="checkbox" id="toggle">
-    <div class="container container">
 
     <div id="header">
         <h1 id="astro-title">Szegedi asztrofotók</h1>

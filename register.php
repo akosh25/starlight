@@ -24,6 +24,7 @@
         $pass2 = $_POST["password2"];
         $age = $_POST["age"];
         $gender = $_POST["gender"];
+        $agreement = isset($_POST["box"]);
 
 
         foreach($accounts as $account){
@@ -46,6 +47,10 @@
 
         if($age < 12){
             $errors[] = "Csak 12 éves kor felett lehet regisztrálni";
+        }
+
+        if(!$agreement) {
+            $errors[] = "Az adatkezelési tájékoztatót el kell fogadni a regisztrációhoz!";
         }
 
         if(count($errors) === 0){
@@ -107,19 +112,7 @@
         <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box" id="box"></label>
         <br/>
         <input type="submit" name="signup" value="Regisztráció">
-        <br>
-        <?php
-        if(isset($_POST["signup"])) {
-            if(empty($errors)) {
-                echo "<p>Sikeres regisztráció!</p>";
-            } else {
-                foreach($errors as $error) {
-                    echo "<p>$error</p>";
-                }
-            }
-        }
-        ?>
-    
+        <br>    
     </form>
     </section>
 

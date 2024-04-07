@@ -71,19 +71,7 @@
         <label>Jelszó: <input type="password" name="password"></label>
         <br>
         <input type="submit" name="login" value="Bejelentkezés">
-        <br>
-        <?php
-        if(isset($_POST["login"])) {
-            if(empty($errors)) {
-                echo "<p>Sikeres bejelentkezés!</p>";
-            } else {
-                foreach($errors as $error) {
-                    echo "<p>$error</p>";
-                }
-            }
-        }
-        ?>
-    
+        <br>    
     </form>
     </section>
 
