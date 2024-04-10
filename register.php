@@ -108,7 +108,7 @@
                 #új felhasználó adatai
             $data = [
                 "username" => $user,
-                "password" => $pass,
+                "password" => hashPassword($pass),
                 "age" => $age,
                 "gender" => $gender,
             ];
