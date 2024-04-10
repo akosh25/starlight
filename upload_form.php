@@ -1,3 +1,8 @@
+<?php  
+session_start();
+include "kozos.php";  
+?>
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -13,18 +18,23 @@
 <body>
     <header>
         <div class="menu-bar">
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
-                    <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
-                    <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
+                <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
+                <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+                <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
+                <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
+                <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])):?>
                     <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                     <li><a href="register.php" class="menu-item">Regisztráció</a></li>
-                    <li><a href="upload_form.php" class="menu-item active">Asztrofotó beküldés</a></li>
-                    <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <?php else: ?>
+                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="logout.php">Kijelentkezés</a></li>
+                <?php endif;?>
+                <li></li>
+            </ul>
+        </nav>
         </div>
     </header>
     <input type="checkbox" id="toggle">

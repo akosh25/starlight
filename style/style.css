@@ -399,12 +399,37 @@ footer {
 table {
     width: 100%;
     border-collapse: collapse;
-  }
-  table, th, td {
+}
+table, th, td {
     border: 1px solid black;
-  }
-  th, td {
+}
+th, td {
     padding: 5px;
     text-align: left;
-  }
-    
+}
+
+/* Profil információk */
+.profile-info {
+    margin-top: 20px;
+    margin-right: 500px;
+    margin-left: 500px;
+    border: 1px solid #0b0a0a;
+    border-radius: 5px;
+    padding: 50px;
+    background-color: #2b0e6f;
+}
+
+.profile-info div {
+    margin-bottom: 10px;
+}
+
+.profile-info div label {
+    color:#cee5ec;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.profile-info div span {
+    color: #ece4e4;
+    font-weight: bold;
+}

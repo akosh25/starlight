@@ -1,67 +1,10 @@
-<?php
-    $accounts = [
-        [
-            "username" => "joe",
-            "password" => "123",
-            "age" => 30,
-            "gender" => "m"
-        ],
-
-        [
-            "username" => "jill",
-            "password" => "456",
-            "age" => 33,
-            "gender" => "f"
-        ]
-    ];
-    $errors = [];
-        
-
-    if(isset($_POST["signup"])){
-        
-        $user = $_POST["username"];
-        $pass = $_POST["password"];
-        $pass2 = $_POST["password2"];
-        $age = $_POST["age"];
-        $gender = $_POST["gender"];
-        $agreement = isset($_POST["box"]);
-
-
-        foreach($accounts as $account){
-            if($account["username"] === $user){
-                $errors[] = "A felhasználónév már foglalt!";
-            }
-        }
-
-        if(strlen($pass) < 5){
-            $errors[] = "A jelszó túl rövid!";
-        }
-
-        if(!preg_match('/[A-Za-z]/',$pass) || !preg_match('/[0-9]/', $pass)){
-            $errors[] = "A jelszónak tartalmaznia kell betűt és számjegyet egyaránt!";
-        }
-
-        if($pass !== $pass2){
-            $errors[] = "A két jelszó nem egyezik";
-        }
-
-        if($age < 12){
-            $errors[] = "Csak 12 éves kor felett lehet regisztrálni";
-        }
-
-        if(!$agreement) {
-            $errors[] = "Az adatkezelési tájékoztatót el kell fogadni a regisztrációhoz!";
-        }
-
-        if(count($errors) === 0){
-            echo "Sikeres regisztráció! <br>";
-        }
-        else{
-            foreach($errors as $error){
-                echo $error . "<br>";
-            }
-        }
-    }
+<?php  
+    session_start();
+    include "kozos.php";
+    if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
+        header("Location: profile.php");
+        exit();
+    }  
 ?>
 
 <!DOCTYPE html>
@@ -78,18 +21,23 @@
 <body>
 <header>
         <div class="menu-bar">
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
-                    <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
-                    <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
-                    <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
-                    <li><a href="register.php" class="menu-item active">Regisztráció</a></li>
-                    <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
-                    <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
+                <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
+                <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+                <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
+                <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
+                <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])):?>
+                    <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
+                    <li><a href="register.php" class="menu-item">Regisztráció</a></li>
+                <?php else: ?>
+                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="logout.php">Kijelentkezés</a></li>
+                <?php endif;?>
+                <li></li>
+            </ul>
+        </nav>
         </div>
     </header>
     <input type="checkbox" id="toggle">
@@ -114,6 +62,66 @@
         <input type="submit" name="signup" value="Regisztráció">
         <br>    
     </form>
+    <?php
+        $errors = [];
+        
+
+        if(isset($_POST["signup"])){
+            
+            $user = $_POST["username"];
+            $pass = $_POST["password"];
+            $pass2 = $_POST["password2"];
+            $age = $_POST["age"];
+            $gender = $_POST["gender"];
+            $agreement = isset($_POST["box"]);
+    
+    
+            foreach($accounts as $account){
+                if($account["username"] === $user){
+                    $errors[] = "A felhasználónév már foglalt!";
+                }
+            }
+    
+            if(strlen($pass) < 5){
+                $errors[] = "A jelszó túl rövid!";
+            }
+    
+            if(!preg_match('/[A-Za-z]/',$pass) || !preg_match('/[0-9]/', $pass)){
+                $errors[] = "A jelszónak tartalmaznia kell betűt és számjegyet egyaránt!";
+            }
+    
+            if($pass !== $pass2){
+                $errors[] = "A két jelszó nem egyezik";
+            }
+    
+            if($age < 12){
+                $errors[] = "Csak 12 éves kor felett lehet regisztrálni";
+            }
+    
+            if(!$agreement) {
+                $errors[] = "Az adatkezelési tájékoztatót el kell fogadni a regisztrációhoz!";
+            }
+    
+            if(count($errors) === 0){
+                echo "Sikeres regisztráció! <br>";
+            
+                #új felhasználó adatai
+            $data = [
+                "username" => $user,
+                "password" => $pass,
+                "age" => $age,
+                "gender" => $gender,
+            ];
+    
+            saveUser("felhasznalok.txt", $data);
+        }
+            else{
+                foreach($errors as $error){
+                    echo $error . "<br>";
+                }
+            }
+        }
+    ?>
     </section>
 
 </body>

@@ -1,37 +1,10 @@
-<?php
-    $accounts = [
-        [
-            "username" => "joe",
-            "password" => "123",
-            "age" => 30,
-            "gender" => "m"
-        ],
-
-        [
-            "username" => "jill",
-            "password" => "456",
-            "age" => 33,
-            "gender" => "f"
-        ]
-    ];
-
-        
-
-    if(isset($_POST["login"])){
-        
-        $user = $_POST["username"];
-        $pass = $_POST["password"];
-
-    $msg = "Sikertelen belépés!";
-
-        foreach($accounts as $account){
-            if($user === $account["username"] && $pass === $account["password"]){
-                $msg = "Sikeres belépés";
-                break;
-            }
-        }
-        echo $msg . "<br>";
-    }
+<?php  
+    session_start();
+    include "kozos.php";
+    if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
+        header("Location: profile.php");
+        exit();
+    }  
 ?>
 
 <!DOCTYPE html>
@@ -48,18 +21,23 @@
 <body>
 <header>
         <div class="menu-bar">
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
-                    <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
-                    <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="index.php" class="menu-item">Asztro fotók</a></li>
+                <li><a href="amateur.php" class="menu-item">Információk érdeklődőknek</a></li>
+                <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+                <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
+                <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
+                <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])):?>
                     <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
                     <li><a href="register.php" class="menu-item">Regisztráció</a></li>
-                    <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
-                    <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
-                    <li></li>
-                </ul>
-            </nav>
+                <?php else: ?>
+                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="logout.php">Kijelentkezés</a></li>
+                <?php endif;?>
+                <li></li>
+            </ul>
+        </nav>
         </div>
     </header>
     <input type="checkbox" id="toggle">
@@ -73,8 +51,37 @@
         <input type="submit" name="login" value="Bejelentkezés">
         <br>    
     </form>
-    </section>
+    <?php
+        $accounts = loadUsers("data/felhasznalok.txt");
 
+        $user = "";
+        $pass = "";
+
+        if(isset($_POST["login"])){
+        
+            $user = $_POST["username"];
+            $pass = $_POST["password"];
+    
+        $user_data = array();
+        $success_login = false;
+            foreach($accounts as $account){
+                if($user === $account["username"] && $pass === $account["password"]){
+                    
+                    $user_data["username"] = $account["username"];
+                    $user_data["age"] = $account["age"];
+                    $success_login = true;
+                    break;
+                }
+            }
+            if($success_login){
+                $_SESSION["user"] = $user_data;
+                header("Location: profile.php");
+            }else{
+                echo "Sikertelen belépés";
+            }
+        }
+    ?>
+    </section>
 </body>
 <?php include "footer.php";?>
 </html>
