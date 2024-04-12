@@ -19,7 +19,7 @@ include "kozos.php";
         <div class="menu-bar">
         <nav>
             <ul class="nav-list">
-                <li><a href="index.php" class="menu-item"><img src="img/home.png" alt="Kezdőoldal" width="20" class="menu-image kezdo-kep"></a></li>
+                <li><a href="index.php" class="menu-item"><img src="img/home.png" alt="Kezdőoldal" class="menu-image kezdo-kep"></a></li>
                 <li><a href="asztrofotok.php" class="menu-item">Asztro fotók</a></li>
                 <li><a href="amateur.php" class="menu-item active">Infók</a></li>
                 <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
