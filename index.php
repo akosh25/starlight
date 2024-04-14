@@ -1,5 +1,5 @@
 <?php
-    include "kozos.php";
+    include "functions.php";
     session_start();
 ?>
 
@@ -9,7 +9,6 @@
     <title>Starlight</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PHP examples.">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/style.css?v=<?php echo time(); ?>">
 </head>
@@ -40,13 +39,12 @@
 <h1>Üdvözöljük az Asztrofotósok körében!</h1>
     <?php
         if(isset($_SESSION["user"])){
-            echo "<p class='login-link big-top-margin'>Üdvözlünk az Asztrofotósok társaságában!</p>";
-            echo "<p class='login-link'>Or you can <a href='logout.php'>Kijelentkezés</a>.</p>";
+            echo "<p class='login-link big-top-margin'>Jelenleg bejelentkeztél a profilodba!</p>";
+            echo "<p class='login-link'><a href='logout.php'>Kijelentkezés</a>.</p>";
             
             echo '<form id="form-login" class="login-link" action="delete_user.php" method="POST">
                     <input type="submit" name="btn-delete-ueser"  value="Delete my account">
                 </form>';
-            echo "<p class='login-link'>Check your <a href='message/message_page.php'>messages</a>.</p>";
         }
         else{
             

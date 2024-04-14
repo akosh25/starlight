@@ -1,6 +1,6 @@
 <?php  
     session_start();
-    include "kozos.php";
+    include "functions.php";
     if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
         header("Location: profile.php");
         exit();
@@ -53,34 +53,22 @@
         <br>    
     </form>
     <?php
-        $accounts = loadUsers("data/felhasznalok.txt");
-
-        $user = "";
-        $pass = "";
 
         if(isset($_POST["login"])){
         
             $user = $_POST["username"];
             $pass = $_POST["password"];
     
-        $user_data = array();
-        $success_login = false;
-            foreach($accounts as $account){
-                if($user === $account["username"] && $pass === $account["password"]){
-                    
-                    $user_data["username"] = $account["username"];
-                    $user_data["age"] = $account["age"];
-                    $success_login = true;
-                    break;
-                }
-            }
-            if($success_login){
-                $_SESSION["user"] = $user_data;
-                header("Location: profile.php");
-            }else{
-                echo "Sikertelen belépés";
-            }
+            $user_data = loadUser($conn, $user);
+
+        if($user_data && password_verify($pass, $user_data["password"])){
+        $_SESSION["user"] = $user_data;
+        header("Location: profile.php");
+        exit();
+        } else {
+        echo "Sikertelen belépés";
         }
+    }
     ?>
     </section>
 </body>

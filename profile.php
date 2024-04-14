@@ -1,9 +1,17 @@
 <?php  
 session_start();
-include "kozos.php";  
+include "functions.php";  
 if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
+}
+
+$user = loadUser($conn, $_SESSION["user"]["username"]);
+
+// Ha a felhasználó létezik az adatbázisban és van profilképe
+if($user !== null && !empty($user['profile_pic'])) {
+    // A profilképet beállítjuk a $_SESSION változóban, hogy elérhető legyen más oldalakon is
+    $_SESSION['user']['profile_pic'] = $user['profile_pic'];
 }
 ?>
 
@@ -17,6 +25,17 @@ if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
     <meta name="keywords" content="csillagok, asztrofotók, bolygók">
     <link rel="icon" href="logo/comet.jpg">
     <link rel="stylesheet" href="style/style.css">
+    <style>
+
+        .profile-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .profile-info th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -42,20 +61,36 @@ if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
         </div>
     </header>
     <input type="checkbox" id="toggle">
-    <div class="container">
-        <section class="content">
-            <div class="profile-info">
-                <div>
-                    <label>Név:</label>
-                    <span><?=$_SESSION["user"]["username"]?></span>
-                </div>
-                <div>
-                    <label>Kor:</label>
-                    <span><?=$_SESSION["user"]["age"]?></span>
-                </div>
+
+            <div class="profile">
+                <table>
+                    <tr>
+                        <th colspan="2">Felhasználói adatok</th>
+                    </tr>
+                    <tr>
+                        <td>Felhasználónév:</td>
+                        <td><?=$_SESSION["user"]["username"]?></td>
+                    </tr>
+                    <tr>
+                        <td>Név:</td>
+                        <td><?=$_SESSION["user"]["nev"]?></td>
+                    </tr>
+                    <tr>
+                        <td>Születési idő:</td>
+                        <td><?=$_SESSION["user"]["szulev"]?></td>
+                    </tr>
+                    <tr>
+                        <td>Kor:</td>
+                        <td><?=$_SESSION["user"]["age"]?></td>
+                    </tr>
+                    <tr>
+                        <td>Profilkép:</td>
+                        <td><img src="<?=$_SESSION['user']['profile_pic']?>" alt="Profilkép"></td>
+                    </tr>
+                </table>
             </div>
-        </section>
-    </div>
+               
+
     <?php include "footer.php";?>
 </body>
 </html>

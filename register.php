@@ -1,11 +1,11 @@
 <?php  
     session_start();
-    include "kozos.php";
+    include "functions.php";
 
     if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
         header("Location: profile.php");
         exit();
-    }  
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
 </head>
 <body>
 <header>
-        <div class="menu-bar">
+    <div class="menu-bar">
         <nav>
             <ul class="nav-list">
                 <li><a href="index.php" class="menu-item"><img src="img/home.png" alt="Kezdőoldal" class="menu-image kezdo-kep"></a></li>
@@ -37,95 +37,85 @@
                     <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                     <li><a href="logout.php">Kijelentkezés</a></li>
                 <?php endif;?>
-                <li></li>
             </ul>
         </nav>
-        </div>
-    </header>
-    <input type="checkbox" id="toggle">
-    <div class="container container">
-<section class="content">
-    <form action="register.php" method="POST">
-        <label>Felhasználónév: <input type="text" name="username"></label>
-        <br>
-        <label>Jelszó: <input type="password" name="password"></label>
-        <br>
-        <label>Jelszó ismét: <input type="password" name="password2"></label>
-        <br>
-        <label>Kor: <input type="number" name="age"></label>
-        <br>
-        <label>Profilkép: <input type="file" name="profile-pic"></label>
-        <br>
-        <label><input type="radio" name="gender" value="m">Férfi</label>
-        <label><input type="radio" name="gender" value="f">Nő</label>
-        <br>
-        <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box" id="box"></label>
-        <br/>
-        <input type="submit" name="signup" value="Regisztráció">
-        <br>    
-    </form>
-    <?php
-        $errors = [];
-        
+    </div>
+</header>
 
-        if(isset($_POST["signup"])){
-            
-            $user = $_POST["username"];
-            $pass = $_POST["password"];
-            $pass2 = $_POST["password2"];
-            $age = $_POST["age"];
-            $gender = $_POST["gender"];
-            $agreement = isset($_POST["box"]);
-    
-    
-            foreach($accounts as $account){
-                if($account["username"] === $user){
-                    $errors[] = "A felhasználónév már foglalt!";
+<input type="checkbox" id="toggle">
+<div class="container container">
+    <section class="content">
+        <form action="register.php" method="POST" enctype="multipart/form-data">
+            <label>Felhasználónév: <input type="text" name="username"></label><br>
+            <label>Jelszó: <input type="password" name="password"></label><br>
+            <label>Jelszó ismét: <input type="password" name="password2"></label><br>
+            <label for="nev">Név: <input type="text" name="nev" id="nev"></label><br>
+            <label for="szulev">Születési dátum: <input type="date" name="szulev" id="szulev"></label><br>
+            <label>Kor: <input type="number" name="age"></label><br>
+            <label>Profilkép: <input type="file" name="profile-pic"></label><br>
+            <label><input type="radio" name="gender" value="m">Férfi</label>
+            <label><input type="radio" name="gender" value="f">Nő</label><br>
+            <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box" id="box"></label><br/>
+            <input type="submit" name="signup" value="Regisztráció"><br>    
+        </form>
+
+        <?php
+            $errors = [];
+
+            if(isset($_POST["signup"])){
+                // Profilkép feltöltése
+                if(isset($_FILES['profile-pic']['tmp_name']) && !empty($_FILES['profile-pic']['tmp_name'])) {
+                    $target_dir = "uploads/";
+                    $target_file = $target_dir . basename($_FILES["profile-pic"]["name"]);
+                    if(move_uploaded_file($_FILES["profile-pic"]["tmp_name"], $target_file)) {
+                        $profile_pic = $target_file;
+                    } else {
+                        $errors[] = "Hiba történt a kép feltöltésekor.";
+                    }
+                } else {
+                    $profile_pic = "img/default_profile.jpg"; // Alapértelmezett kép
+                }
+                
+
+
+                $user = $_POST["username"];
+                $pass = $_POST["password"];
+                $pass2 = $_POST["password2"];
+                $nev = $_POST["nev"];
+                $szulev = $_POST["szulev"];
+                $age = $_POST["age"];
+                $gender = $_POST["gender"];
+
+                $user_data = [
+                    'username' => $user,
+                    'password' => $pass,
+                    'nev' => $nev,
+                    'szulev' => $szulev,
+                    'age' => $age,
+                    'gender' => $gender,
+                    'profile_pic' => $profile_pic
+                ];
+
+
+                // Ha nincs hiba, mentés
+                if (count($errors) === 0) {
+                    saveUser($conn, $user_data);
+                    if(!empty($user_data['profile_pic'])) {
+                        // Ha van feltöltött profilkép, akkor azt beállítjuk a $_SESSION változóban
+                        $_SESSION['user']['profile_pic'] = $user_data['profile_pic'];
+                    }
+                } else {
+                    // Hibák megjelenítése
+                    echo "<ul>";
+                    foreach ($errors as $error) {
+                        echo "<li>" . $error . "</li>";
+                    }
+                    echo "</ul>";
                 }
             }
-    
-            if(strlen($pass) < 5){
-                $errors[] = "A jelszó túl rövid!";
-            }
-    
-            if(!preg_match('/[A-Za-z]/',$pass) || !preg_match('/[0-9]/', $pass)){
-                $errors[] = "A jelszónak tartalmaznia kell betűt és számjegyet egyaránt!";
-            }
-    
-            if($pass !== $pass2){
-                $errors[] = "A két jelszó nem egyezik";
-            }
-    
-            if($age < 12){
-                $errors[] = "Csak 12 éves kor felett lehet regisztrálni";
-            }
-    
-            if(!$agreement) {
-                $errors[] = "Az adatkezelési tájékoztatót el kell fogadni a regisztrációhoz!";
-            }
-    
-            if(count($errors) === 0){
-                echo "Sikeres regisztráció! <br>";
-            
-                #új felhasználó adatai
-            $data = [
-                "username" => $user,
-                "password" => hashPassword($pass),
-                "age" => $age,
-                "gender" => $gender,
-            ];
-    
-            saveUser("felhasznalok.txt", $data);
-        }
-            else{
-                foreach($errors as $error){
-                    echo $error . "<br>";
-                }
-            }
-        }
-    ?>
+        ?>
     </section>
+</div>
 
-</body>
 <?php include "footer.php";?>
 </html>

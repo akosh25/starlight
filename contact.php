@@ -1,6 +1,6 @@
 <?php  
 session_start();
-include "kozos.php";  
+include "functions.php";  
 ?>
 
 <!DOCTYPE html>
