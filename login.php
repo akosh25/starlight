@@ -54,19 +54,17 @@
     </form>
     <?php
 
-        if(isset($_POST["login"])){
-        
-            $user = $_POST["username"];
-            $pass = $_POST["password"];
+    if(isset($_POST["login"])){
+        $user = $_POST["username"];
+        $pass = $_POST["password"];
+        $user_data = loadUser($conn, $user);
     
-            $user_data = loadUser($conn, $user);
-
         if($user_data && password_verify($pass, $user_data["password"])){
-        $_SESSION["user"] = $user_data;
-        header("Location: profile.php");
-        exit();
+            $_SESSION["user"] = $user_data;
+            header("Location: profile.php");
+            exit();
         } else {
-        echo "Sikertelen belépés";
+            echo "Sikertelen belépés";
         }
     }
     ?>

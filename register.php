@@ -3,7 +3,8 @@
     include "functions.php";
 
     if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
-        header("Location: profile.php");
+        // Ha már be van jelentkezve, akkor irányítsuk át az index.php oldalra
+        header("Location: index.php");
         exit();
     }
 ?>
@@ -104,14 +105,20 @@
                         // Ha van feltöltött profilkép, akkor azt beállítjuk a $_SESSION változóban
                         $_SESSION['user']['profile_pic'] = $user_data['profile_pic'];
                     }
-                } else {
+                 
+                    // Password and profile pic update
+                    updateUserProfile($conn, $user, $pass, $profile_pic);
+                 
+                    // Üzenet kiírása a regisztráció sikeres voltáról
+                    echo "<p>Kérlek, jelentkezz be.</p>";
+                 } else {
                     // Hibák megjelenítése
                     echo "<ul>";
                     foreach ($errors as $error) {
                         echo "<li>" . $error . "</li>";
                     }
                     echo "</ul>";
-                }
+                 }
             }
         ?>
     </section>

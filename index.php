@@ -40,7 +40,7 @@
     <?php
         if(isset($_SESSION["user"])){
             echo "<p class='login-link big-top-margin'>Jelenleg bejelentkeztél a profilodba!</p>";
-            echo "<p class='login-link'><a href='logout.php'>Kijelentkezés</a>.</p>";
+            echo "<p class='login-link'><a href='logout.php'>Kijelentkezés</a></p>";
             
             echo '<form id="form-login" class="login-link" action="delete_user.php" method="POST">
                     <input type="submit" name="btn-delete-ueser"  value="Delete my account">

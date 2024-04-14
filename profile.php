@@ -62,35 +62,58 @@ if($user !== null && !empty($user['profile_pic'])) {
     </header>
     <input type="checkbox" id="toggle">
 
-            <div class="profile">
-                <table>
-                    <tr>
-                        <th colspan="2">Felhasználói adatok</th>
-                    </tr>
-                    <tr>
-                        <td>Felhasználónév:</td>
-                        <td><?=$_SESSION["user"]["username"]?></td>
-                    </tr>
-                    <tr>
-                        <td>Név:</td>
-                        <td><?=$_SESSION["user"]["nev"]?></td>
-                    </tr>
-                    <tr>
-                        <td>Születési idő:</td>
-                        <td><?=$_SESSION["user"]["szulev"]?></td>
-                    </tr>
-                    <tr>
-                        <td>Kor:</td>
-                        <td><?=$_SESSION["user"]["age"]?></td>
-                    </tr>
-                    <tr>
-                        <td>Profilkép:</td>
-                        <td><img src="<?=$_SESSION['user']['profile_pic']?>" alt="Profilkép"></td>
-                    </tr>
-                </table>
-            </div>
-               
-
+    <div class="profile">
+        <table class="profile">
+            <tr>
+                <th colspan="2">Felhasználói adatok</th>
+            </tr>
+            <tr>
+                <td>Felhasználónév:</td>
+                <td><?=$_SESSION["user"]["username"]?></td>
+            </tr>
+            <tr>
+                <td>Név:</td>
+                <td><?=$_SESSION["user"]["nev"]?></td>
+            </tr>
+            <tr>
+                <td>Jelszó módosítása:</td>
+                <td>
+                    <form action="update_profile.php" method="POST">
+                        <label for="new_password">Új jelszó:</label>
+                        <input type="password" id="new_password" name="new_password">
+                        <input type="submit" value="Mentés">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Születési idő:</td>
+                <td><?=$_SESSION["user"]["szulev"]?></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <form action="update_profile.php" method="POST">
+                        <label for="new_birthdate">Új születési dátum:</label>
+                        <input type="date" id="new_birthdate" name="new_birthdate">
+                        <input type="submit" value="Mentés">
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Profilkép:</td>
+                <td><img src="<?=$_SESSION['user']['profile_pic']?>" alt="Profilkép"></td>
+            </tr>
+            <tr>
+                <td>Profilkép módosítása:</td>
+                <td>
+                    <form action="update_profile.php" method="POST" enctype="multipart/form-data">
+                        <label for="new_profile_pic">Új profilkép kiválasztása:</label>
+                        <input type="file" id="new_profile_pic" name="new_profile_pic">
+                        <input type="submit" value="Mentés">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
     <?php include "footer.php";?>
 </body>
 </html>
