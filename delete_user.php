@@ -2,21 +2,21 @@
 	session_start();
 	include("functions.php");
 	
-	if(isset($_SESSION["username"])){
-		$user_name = $_SESSION["username"];
-		$query = "DELETE FROM users WHERE username = '$username'";
-		if(mysqli_query($con, $query)){
-		    session_unset();
-		    session_destroy();
-		    echo "A felhasználói fiók sikeresen törölve lett.";
-		    header('location: login.php'); // Átirányítás az index.php fájlra
-		    die;
+	if(isset($_SESSION["user"]) && !empty($_SESSION["user"])){
+		$user_name = $_SESSION["user"]["username"];
+		$query = "DELETE FROM users WHERE username = '$user_name'";
+		if(mysqli_query($conn, $query)){
+			session_unset();
+			session_destroy();
+			
+			header('location: index.php');
+			die;
 		} else {
-		    echo "Hiba történt a felhasználói fiók törlése során.";
+			echo "Hiba történt a felhasználói fiók törlése során: " . mysqli_error($conn);
 		}
 	}
 	else{
-		header('location: asztrofotok.php');
+		header('location: index.php');
 		die;
 	}
 ?>

@@ -50,20 +50,15 @@ include "functions.php";
             <p class="audio-description">🎵 Az űrlap kitöltéséhez hangulatzene indítását javasoljuk. 🎵</p>
         </div>
 
-        <form action="upload_form.html" method="post" enctype="multipart/form-data" autocomplete="off">
-            
+        <form action="upload_form.php" method="post" enctype="multipart/form-data" autocomplete="off">
             <label for="nev">Név: <input type="text" name="nev" id="nev"></label>
-            <br/>
+            <br>
             <label for="fotodatum">Mikor készült a kép?: <input type="date" name="fotodatum" id="fotodatum"></label>
-            <br/>
+            <br>
             <label for="email">E-mail-cím: <input type="email" name="email" placeholder="James@Webb.com" id="email"></label>
-            <br/>
+            <br>
             <label for="mob">Mobilszám: <input type="tel" name="mob" id="mob"></label>
-            <br/>
-            <label for="file">Fájl feltöltés: <input type="file" name="file" id="file"></label>
-            <br/>
-            <label for="kategoriak"></label>
-            <br/>
+            <br>
             <label for="kategoriak">Válassz kategóriát:</label>
             <select name="kategoriak" id="kategoriak">
                 <option value="valasz">Válasz kategóriát</option>    
@@ -74,10 +69,9 @@ include "functions.php";
                 <option value="tajkep">Asztrofotós tájképek</option>  
                 <option value="timelapse">Asztrofotós timelapsek</option>  
             </select>
-            <br/>
+            <br>
             <label for="kep-cime">A kép címe: <input type="text" name="kep-cime" maxlength="50" id="kep-cime"></label>
-            <br/>
-            <br/>
+            <br>
             <div class="form-section">
                 <fieldset>
                     <legend>Mikor készült a fotó?</legend>
@@ -87,16 +81,65 @@ include "functions.php";
                     <label for="tel">Tél<input type="radio" name="evszakok" value="tel" id="tel"></label>
                 </fieldset>
             </div>
-            <br/>
+            <br>
             <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box" id="box"></label>
-            <br/>
-            <br/>
+            <br>
+            <br>
+            <label for="file">Fájl feltöltés: <input type="file" name="file" id="file"></label>
+            <br>
+            <br>
             <input type="reset" name="reset" value="Visszaállítás" class="button-interaction">
-            <br/>
+            <br>
             <input type="submit" name="submit" value="Beküldés" class="button-interaction">
-            <br/>
+            <br>
         </form>
     </div>
+    <?php
+    if (isset($_POST['submit'])) {
+        $title = $_POST['kep-cime'];
+        $image = file_get_contents($_FILES['file']['tmp_name']);
+        $user_id = $_SESSION["user"]["id"];
+
+        // Adatbázis kapcsolat
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Ellenőrizd az e-mail cím formátumát
+        $email = $_POST['email'];
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "Hibás e-mail formátum";
+            exit; 
+        }
+
+        // Ellenőrizd a mobilszám hosszát
+        $mob = $_POST['mob'];
+        if (!preg_match('/^[+-]?[0-9]{7,15}$/', $mob)) {
+            echo "Hibás mobilszám formátum";
+            exit; 
+        }
+
+        // Fájl feltöltése és adatbázisba mentése
+        if ($_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+            echo "Hiba történt a fájl feltöltésekor: " . $_FILES['file']['error'];
+        } else {
+            $stmt = $conn->prepare("INSERT INTO photos (user_id, title, image) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $user_id, $title, $image);
+
+            if ($stmt->execute()) {
+                echo "A kép sikeresen feltöltve.";
+            } else {
+                echo "Hiba történt a kép feltöltésekor: " . $stmt->error;
+            }
+
+            $stmt->close();
+        }
+
+        $conn->close();
+    }
+    ?>
+
 <?php include "footer.php"?>
 </body>
 </html>

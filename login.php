@@ -2,7 +2,7 @@
     session_start();
     include "functions.php";
     if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
-        header("Location: profile.php");
+        header("Location: index.php");
         exit();
     }  
 ?>
@@ -32,7 +32,7 @@
                     <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
                     <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                 <?php else: ?>
-                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="profile.php">Felhasználó</a></li>
                     <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                     <li><a href="logout.php">Kijelentkezés</a></li>
                 <?php endif;?>

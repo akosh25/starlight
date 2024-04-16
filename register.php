@@ -3,7 +3,6 @@
     include "functions.php";
 
     if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
-        // Ha már be van jelentkezve, akkor irányítsuk át az index.php oldalra
         header("Location: index.php");
         exit();
     }
@@ -33,10 +32,6 @@
                 <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])):?>
                     <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                     <li><a href="register.php" class="menu-item active">Regisztráció</a></li>
-                <?php else: ?>
-                    <li><a href="profile.php">Profile</a></li>
-                    <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
-                    <li><a href="logout.php">Kijelentkezés</a></li>
                 <?php endif;?>
             </ul>
         </nav>
@@ -106,11 +101,13 @@
                         $_SESSION['user']['profile_pic'] = $user_data['profile_pic'];
                     }
                  
-                    // Password and profile pic update
+                    // update
                     updateUserProfile($conn, $user, $pass, $profile_pic);
-                 
-                    // Üzenet kiírása a regisztráció sikeres voltáról
-                    echo "<p>Kérlek, jelentkezz be.</p>";
+                    
+                    // Elmentjük a felhasználó adatait a session-be
+                    $_SESSION['user'] = $user_data;
+
+                    echo "<p>Sikeres regiszráció!</p>";
                  } else {
                     // Hibák megjelenítése
                     echo "<ul>";

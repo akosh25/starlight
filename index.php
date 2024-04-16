@@ -26,7 +26,7 @@
                     <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                     <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                 <?php else: ?>
-                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="profile.php">Felhasználó</a></li>
                     <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                     <li><a href="logout.php">Kijelentkezés</a></li>
                 <?php endif;?>
@@ -40,11 +40,7 @@
     <?php
         if(isset($_SESSION["user"])){
             echo "<p class='login-link big-top-margin'>Jelenleg bejelentkeztél a profilodba!</p>";
-            echo "<p class='login-link'><a href='logout.php'>Kijelentkezés</a></p>";
-            
-            echo '<form id="form-login" class="login-link" action="delete_user.php" method="POST">
-                    <input type="submit" name="btn-delete-ueser"  value="Delete my account">
-                </form>';
+            echo "<p class='login-link'><a href='logout.php'>Kijelentkezés</a></p>";            
         }
         else{
             

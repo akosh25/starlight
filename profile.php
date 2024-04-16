@@ -114,6 +114,11 @@ if($user !== null && !empty($user['profile_pic'])) {
             </tr>
         </table>
     </div>
+    <?php
+    echo '<form id="form-login" class="login-link" action="delete_user.php" method="POST">
+        <input type="submit" name="btn-delete-user"  value="felhasználói fiók törlése">
+        </form>';
+    ?>
     <?php include "footer.php";?>
 </body>
 </html>
