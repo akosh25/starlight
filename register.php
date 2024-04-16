@@ -106,8 +106,6 @@
                     
                     // Elmentjük a felhasználó adatait a session-be
                     $_SESSION['user'] = $user_data;
-
-                    echo "<p>Sikeres regiszráció!</p>";
                  } else {
                     // Hibák megjelenítése
                     echo "<ul>";
