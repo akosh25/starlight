@@ -119,6 +119,6 @@ if($user !== null && !empty($user['profile_pic'])) {
         <input type="submit" name="btn-delete-user"  value="felhasználói fiók törlése">
         </form>';
     ?>
-    <?php include "footer.php";?>
-</body>
+    <?php include "footer.php";?>  
+    </body>
 </html>

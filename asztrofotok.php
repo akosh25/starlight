@@ -138,9 +138,7 @@ include "functions.php";
     <br />
     <br />
     Kulcsszavak: <b>Bolygók </b><b>Csillagok </b><b>Galaxisok </b><b>Meteorok </b><b>Asztrofotók </b>
-</div>
 <br>
-
 </div>
 <?php include "footer.php"?>
 </body> 
