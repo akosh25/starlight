@@ -1,6 +1,16 @@
 <?php
     include "functions.php";
     session_start();
+
+    $latogatasok = 1; // hányszor látogattuk meg a weboldalt eddig
+
+  // ha már van egy, az eddigi látogatások számát tároló sütink, akkor betöltjük annak az értékét
+  if (isset($_COOKIE["visits"])) {
+    $latogatasok = $_COOKIE["visits"] + 1;  // az eddigi látogatások számát megnöveljük 1-gyel
+  }
+
+  // egy "visits" nevű süti a látogatásszám tárolására, amelynek élettartama 30 nap
+  setcookie("visits", $latogatasok, time() + (60*60*24*30), "/");
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +46,14 @@
         </div>
 </header>
 <main>
-<h1>Üdvözöljük az Asztrofotósok körében!</h1>
+<?php
+if ($latogatasok > 1) {     // már járt az oldalon
+          echo "<h1>Köszöntünk újra itt az Asztrofotósok körében!</h1>";
+        } else {                    // először jár az oldalon
+            echo "<h1>Köszöntünk először az Asztrofotósok körében! Örülünk, hogy itt vagy!</h1>";
+        }
+?>
+
     <?php
         if(isset($_SESSION["user"])){
             echo "<p class='login-link big-top-margin'>Jelenleg bejelentkeztél a profilodba!</p>";
@@ -52,6 +69,8 @@
              vagy 
             <a href='register.php'>Regisztrálj</a>!</p>";
         }
+
+        
     ?>
 </main>
 <?php include "footer.php"?>
