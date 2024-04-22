@@ -63,6 +63,18 @@
                 if(isset($_FILES['profile-pic']['tmp_name']) && !empty($_FILES['profile-pic']['tmp_name'])) {
                     $target_dir = "uploads/";
                     $target_file = $target_dir . basename($_FILES["profile-pic"]["name"]);
+
+                    // Kiterjesztés ellenőrzése
+                    $kiterjesztes = strtolower(pathinfo($_FILES["profile-pic"]["name"], PATHINFO_EXTENSION));
+                    if (!in_array($kiterjesztes, ['jpg', 'jpeg', 'png'])) {
+                        $errors[] = "Csak JPG, JPEG és PNG formátumú képek engedélyezettek.";
+                    }
+                    
+                    // Méret ellenőrzése
+                    if ($_FILES["profile-pic"]["size"] > 31457280) {
+                        $errors[] = "A fájl mérete nem lehet nagyobb 30 MB-nál.";
+                    }
+
                     if(move_uploaded_file($_FILES["profile-pic"]["tmp_name"], $target_file)) {
                         $profile_pic = $target_file;
                     } else {
@@ -71,9 +83,9 @@
                 } else {
                     $profile_pic = "img/default_profile.jpg"; // Alapértelmezett kép
                 }
+
                 
-
-
+                
                 $user = $_POST["username"];
                 $pass = $_POST["password"];
                 $pass2 = $_POST["password2"];
@@ -92,7 +104,11 @@
                     'profile_pic' => $profile_pic
                 ];
 
-
+                // Kor ellenőrzése
+                if($age <= 0) {
+                    $errors[] = "A kor nem lehet 0 vagy annál kisebb szám.";
+                }
+                
                 // Ha nincs hiba, mentés
                 if (count($errors) === 0) {
                     saveUser($conn, $user_data);
@@ -106,6 +122,13 @@
                     
                     // Elmentjük a felhasználó adatait a session-be
                     $_SESSION['user'] = $user_data;
+
+                    sleep(3);
+
+                    // Átirányítás
+                    header('Location: index.php');
+                    exit();
+
                  } else {
                     // Hibák megjelenítése
                     echo "<ul>";
