@@ -68,6 +68,7 @@ if($user !== null && !empty($user['profile_pic'])) {
     <table class="profile">
         <tr>
             <th>Saját adatok</th>
+            <th>Felhasználók</th>           
         </tr>
         <tr>
             <td>
@@ -133,6 +134,25 @@ if($user !== null && !empty($user['profile_pic'])) {
                             ?>
                         </td>
                     </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <th>Felhasználónév</th>
+                        <th>Profilkép</th>
+                    </tr>
+                    <?php
+                    // Betöltjük az összes felhasználót az adatbázisból
+                    $users = loadAllUsers($conn);
+
+                    // Kilistázzuk a felhasználókat és adataikat
+                    foreach($users as $user) {  
+                        echo "<tr>";
+                        echo "<td>".$user['username']."</td>";
+                        echo "<td><img src='".$user['profile_pic']."' alt='Profilkép' style='width: 50px; height: 50px; border-radius: 50%;'></td>"; 
+                    }
+                    ?>
                 </table>
             </td>
         </tr>
