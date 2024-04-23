@@ -1,16 +1,23 @@
 <?php
-    include "functions.php";
     session_start();
+    include "functions.php";  
+    
+    if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
+        header("Location: login.php");
+        exit();
+    }
+    
+    $user = loadUser($conn, $_SESSION["user"]["username"]);
 
     $latogatasok = 1; // hányszor látogattuk meg a weboldalt eddig
 
-  // ha már van egy, az eddigi látogatások számát tároló sütink, akkor betöltjük annak az értékét
-  if (isset($_COOKIE["visits"])) {
-    $latogatasok = $_COOKIE["visits"] + 1;  // az eddigi látogatások számát megnöveljük 1-gyel
-  }
+    // ha már van egy, az eddigi látogatások számát tároló sütink, akkor betöltjük annak az értékét
+    if (isset($_COOKIE["visits"])) {
+        $latogatasok = $_COOKIE["visits"] + 1;  // az eddigi látogatások számát megnöveljük 1-gyel
+    }
 
-  // egy "visits" nevű süti a látogatásszám tárolására, amelynek élettartama 30 nap
-  setcookie("visits", $latogatasok, time() + (60*60*24*30), "/");
+    // egy "visits" nevű süti a látogatásszám tárolására, amelynek élettartama 30 nap
+    setcookie("visits", $latogatasok, time() + (60*60*24*30), "/");
 ?>
 
 <!DOCTYPE html>
@@ -32,15 +39,19 @@
                 <li><a href="amateur.php" class="menu-item">Infók</a></li>
                 <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
                 <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
-                <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])):?>
-                    <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
-                    <li><a href="register.php" class="menu-item">Regisztráció</a></li>
-                <?php else: ?>
-                    <li><a href="profile.php">Felhasználó</a></li>
-                    <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
-                    <li><a href="logout.php">Kijelentkezés</a></li>
-                <?php endif;?>
-                <li></li>
+                <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
+                        <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
+                        <li><a href="register.php" class="menu-item">Regisztráció</a></li>
+                        <?php else: ?>
+                        <?php if($user !== null && $user['role'] !== 'admin'): ?>
+                            <li><a href="profile.php">Felhasználó</a></li>
+                        <?php else: ?>
+                            <li><a href="admin.php">Admin</a></li>
+                        <?php endif; ?>
+                        <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
+                        <li><a href="logout.php">Kijelentkezés</a></li>
+                        <?php endif; ?>
+                    <li></li>
             </ul>
         </nav>
         </div>

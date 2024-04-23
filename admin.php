@@ -9,6 +9,12 @@ if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
 
 $user = loadUser($conn, $_SESSION["user"]["username"]);
 
+// Ellenőrizzük, hogy a felhasználó adminisztrátor-e
+if($user !== null && $user['role'] !== 'admin') {
+    // Ha nem adminisztrátor
+    header("Location: profile.php");
+    exit();
+}
 
 // Ha a felhasználó létezik az adatbázisban és van profilképe
 if($user !== null && !empty($user['profile_pic'])) {
@@ -52,11 +58,15 @@ if($user !== null && !empty($user['profile_pic'])) {
                     <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
                         <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
-                    <?php else: ?>
-                        <li><a href="profile.php">Felhasználó</a></li>
+                        <?php else: ?>
+                        <?php if($user !== null && $user['role'] !== 'admin'): ?>
+                            <li><a href="profile.php">Felhasználó</a></li>
+                        <?php else: ?>
+                            <li><a href="admin.php">Admin</a></li>
+                        <?php endif; ?>
                         <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                         <li><a href="logout.php">Kijelentkezés</a></li>
-                    <?php endif; ?>
+                        <?php endif; ?>
                     <li></li>
                 </ul>
             </nav>
@@ -68,6 +78,7 @@ if($user !== null && !empty($user['profile_pic'])) {
     <table class="profile">
         <tr>
             <th>Saját adatok</th>
+            <th>Felhasználók</th>
         </tr>
         <tr>
             <td>
@@ -135,6 +146,48 @@ if($user !== null && !empty($user['profile_pic'])) {
                     </tr>
                 </table>
             </td>
+            <td>
+                <table>
+                    <tr>
+                        <th>Felhasználónév</th>
+                        <th>Profilkép</th>
+                        <th>Szerepkör</th>
+                        <th>Tiltás</th>
+                        <th>Le van tiltva?</th>
+                    </tr>
+                    <?php
+                    // Betöltjük az összes felhasználót az adatbázisból
+                    $users = loadAllUsers($conn);
+
+                    // Kilistázzuk a felhasználókat és adataikat
+                    foreach($users as $user) {  
+                        echo "<tr>";
+                        echo "<td>".$user['username']."</td>";
+                        echo "<td><img src='".$user['profile_pic']."' alt='Profilkép' style='width: 50px; height: 50px; border-radius: 50%;'></td>"; 
+                        echo "<td>".$user['role']."</td>";
+                        echo "<td>";
+                        echo "<form action='" . $_SERVER["PHP_SELF"] . "' method='POST'>";
+                        echo "<input type='hidden' name='username' value='" . $user["username"] . "'>";
+                        if(isset($user['banned']) && $user['banned'] == 1) {
+                            echo "<input type='submit' name='unban_user' value='Tiltás visszavonása'>";
+                        } else {
+                            echo "<input type='submit' name='ban_user' value='Tiltás'>";
+                        }
+                        echo "</form>";
+                        echo "</td>";
+                        echo "<td>";
+                        if(isset($user['banned'])) {
+                            echo ($user['banned'] == 1 ? "Igen" : "Nem");
+                        } else {
+                            // Ha nincs "banned" oszlop, akkor csak üres cellát hagyunk
+                            echo "";
+                        }
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </table>
+            </td>
         </tr>
     </table>
 </div>
@@ -152,6 +205,9 @@ if($user !== null && !empty($user['profile_pic'])) {
             $username_to_ban = $_POST['username'];
             // Végrehajtjuk a tiltást a megadott felhasználónév alapján
             banUser($conn, $username_to_ban);
+            //frissítünk
+            header("Location: admin.php");
+            exit();
         } else {
             // Ha nincs felhasználónevet megadva, jelentsünk hibát
             echo "Hiba: Nem sikerült megadni a tiltandó felhasználónevet.";
@@ -162,12 +218,14 @@ if($user !== null && !empty($user['profile_pic'])) {
             $username_to_unban = $_POST['username'];
             // Végrehajtjuk a tiltás visszavonását a megadott felhasználónév alapján
             unbanUser($conn, $username_to_unban);
+            // Frissítjük az oldalt az új adatokkal
+            header("Location: admin.php");
+            exit();
         } else {
             // Ha nincs felhasználónevet megadva, jelentsünk hibát
             echo "Hiba: Nem sikerült megadni a tiltás visszavonandó felhasználónevet.";
         }
-    } 
-
+    }
     ?>
     <?php include "footer.php";?>
 </body>

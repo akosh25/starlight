@@ -51,6 +51,13 @@
             <label>Profilkép: <input type="file" name="profile-pic"></label><br>
             <label><input type="radio" name="gender" value="m">Férfi</label>
             <label><input type="radio" name="gender" value="f">Nő</label><br>
+            <label for="role">Szerepkör:</label>
+            <select name="role" id="role">
+                <option value="user">Felhasználó</option>
+                <option value="admin">Admin</option>
+            </select>
+            <br>
+            <br>
             <label for="box">Adatkezelési szabályzat elfogadása:<input type="checkbox" name="box" id="box"></label><br/>
             <input type="submit" name="signup" value="Regisztráció"><br>    
         </form>
@@ -93,6 +100,7 @@
                 $szulev = $_POST["szulev"];
                 $age = $_POST["age"];
                 $gender = $_POST["gender"];
+                $role = $_POST["role"];
 
                 $user_data = [
                     'username' => $user,
@@ -101,6 +109,7 @@
                     'szulev' => $szulev,
                     'age' => $age,
                     'gender' => $gender,
+                    'role' => $role,
                     'profile_pic' => $profile_pic
                 ];
 
@@ -118,7 +127,7 @@
                     }
                  
                     // update
-                    updateUserProfile($conn, $user, $pass, $profile_pic);
+                    updateUserProfile($conn, $user, $pass, $profile_pic, $role);
                     
                     // Elmentjük a felhasználó adatait a session-be
                     $_SESSION['user'] = $user_data;

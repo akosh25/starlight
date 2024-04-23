@@ -40,6 +40,7 @@ function saveUser($conn, $user){
     $szulev = $user['szulev'];
     $age = $user['age'];
     $gender = $user['gender'];
+    $role = $user['role'];
     $profile_pic = $user['profile_pic'];
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -89,9 +90,9 @@ function updateUserBirthdate($conn, $username, $newBirthdate) {
     }
 }
 
-function updateUserProfile($conn, $username, $newPassword, $newProfilePic) {
+function updateUserProfile($conn, $username, $newPassword, $newProfilePic, $newRole) {
     // empty check
-    if(empty($username) || (empty($newPassword) && empty($newProfilePic))) {
+    if(empty($username) || (empty($newPassword) && empty($newProfilePic) && empty($newRole))) {
         return false;
     }
 
@@ -118,7 +119,66 @@ function updateUserProfile($conn, $username, $newPassword, $newProfilePic) {
         }
     }
 
+    // role update
+    if(!empty($newRole)) {
+        $sql = "UPDATE users SET role = ? WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $newRole, $username);
+        $success = $stmt->execute();
+        if(!$success) {
+            return false;
+        }
+    }
+
     return true;
 }
 
+function banUser($conn, $username) {
+    // Ellenőrizzük, hogy a felhasználó nem admin
+    $sql = "SELECT role FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        if ($row['role'] !== 'admin') {
+            // Ha a felhasználó nem admin, akkor tiltjuk
+            $sql = "UPDATE users SET banned = 1 WHERE username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+        } else {
+            // Ha a felhasználó admin, nem végezzük el a tiltást
+            echo "Adminisztrátorok nem tiltásra kerülhetnek.";
+        }
+    } else {
+        // Ha a felhasználó nem található az adatbázisban, hibát jelzünk
+        echo "Hiba történt a felhasználó keresésekor.";
+    }
+}
+
+function unbanUser($conn, $username) {
+    // Tiltás visszavonása
+    $sql = "UPDATE users SET banned = 0 WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+}
+
+function loadAllUsers($conn) {
+    $users = array();
+
+    $sql = "SELECT * FROM users";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+    }
+
+    return $users;
+}
 ?>

@@ -1,6 +1,14 @@
 <?php  
 session_start();
 include "functions.php";  
+
+if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
+    header("Location: login.php");
+    exit();
+}
+
+$user = loadUser($conn, $_SESSION["user"]["username"]);
+
 ?>
 
 <!DOCTYPE html>
@@ -26,13 +34,17 @@ include "functions.php";
                     <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
                     <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
                     <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
-                        <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
+                        <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
-                    <?php else: ?>
-                        <li><a href="profile.php">Felhasználó</a></li>
-                        <li><a href="upload_form.php" class="menu-item active">Asztrofotó beküldés</a></li>
+                        <?php else: ?>
+                        <?php if($user !== null && $user['role'] !== 'admin'): ?>
+                            <li><a href="profile.php">Felhasználó</a></li>
+                        <?php else: ?>
+                            <li><a href="admin.php">Admin</a></li>
+                        <?php endif; ?>
+                        <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                         <li><a href="logout.php">Kijelentkezés</a></li>
-                    <?php endif; ?>
+                        <?php endif; ?>
                     <li></li>
                 </ul>
             </nav>

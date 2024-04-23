@@ -32,7 +32,7 @@
                     <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
                     <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                 <?php else: ?>
-                    <li><a href="profile.php">Felhasználó</a></li>
+                    <li><a href="admin.php">Felhasználó</a></li>
                     <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                     <li><a href="logout.php">Kijelentkezés</a></li>
                 <?php endif;?>
@@ -61,7 +61,7 @@
     
         if($user_data && password_verify($pass, $user_data["password"])){
             $_SESSION["user"] = $user_data;
-            header("Location: profile.php");
+            header("Location: admin.php");
             exit();
         } else {
             echo "Sikertelen belépés";
