@@ -1,12 +1,6 @@
 <?php
     session_start();
     include "functions.php";  
-    
-    if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
-        header("Location: index.php");
-        exit();
-    }
-    
 
     $latogatasok = 1; // hányszor látogattuk meg a weboldalt
 
@@ -42,7 +36,8 @@
                         <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                         <?php else: ?>
-                        <?php if($user !== null && $user['role'] !== 'admin'): ?>
+                        <?php $user = loadUser($conn, $_SESSION["user"]["username"]); 
+                            if($user !== null && $user['role'] !== 'admin'): ?>
                             <li><a href="profile.php">Felhasználó</a></li>
                         <?php else: ?>
                             <li><a href="admin.php">Admin</a></li>
@@ -62,7 +57,8 @@
 if ($latogatasok > 1) {     // már járt az oldalon
           echo "<h1>Köszöntünk újra itt az Asztrofotósok körében!</h1>";
         } else {                    // először jár az oldalon
-            echo "<h1>Köszöntünk először az Asztrofotósok körében! Örülünk, hogy itt vagy!</h1>";
+            echo "<h1>Köszöntünk először az Asztrofotósok körében!</h1>";
+            echo "<h1>Örülünk, hogy itt vagy!</h1>";
         }
 ?>
 

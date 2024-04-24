@@ -2,11 +2,6 @@
 session_start();
 include "functions.php";  
 
-if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
-    header("Location: egyesulet.php");
-    exit();
-  }
-
 
 ?>
 
@@ -35,7 +30,8 @@ if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
                         <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                         <?php else: ?>
-                        <?php if($user !== null && $user['role'] !== 'admin'): ?>
+                        <?php $user = loadUser($conn, $_SESSION["user"]["username"]);
+                            if($user !== null && $user['role'] !== 'admin'): ?>
                             <li><a href="profile.php">Felhasználó</a></li>
                         <?php else: ?>
                             <li><a href="admin.php">Admin</a></li>
