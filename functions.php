@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; 
 $password = "starlight25+"; 
-$dbname = "starlight_db"; 
+$dbname = "starlight"; 
 
 // mySQL kapcsolat
 $conn = new mysqli($servername, $username, $password, $dbname);
