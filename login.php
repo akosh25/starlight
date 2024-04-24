@@ -69,7 +69,9 @@
     }
     ?>
     </section>
-    </div>
+    <br/>
+    <br/>
     <?php include "footer.php";?>
-    </body>
+    </div>    
+</body>
 </html>

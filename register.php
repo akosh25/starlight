@@ -149,7 +149,8 @@
             }
         ?>
     </section>
+    <br/>
+    <br/>
+    <?php include "footer.php";?>
 </div>
-
-<?php include "footer.php";?>
 </html>

@@ -2,12 +2,11 @@
 session_start();
 include "functions.php";  
 
-if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
-    header("Location: login.php");
-    exit();
+if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
+  header("Location: amateur.php");
+  exit();
 }
 
-$user = loadUser($conn, $_SESSION["user"]["username"]);
 
 ?>
 
@@ -33,7 +32,7 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
                 <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
                 <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
                 <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
-                        <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
+                        <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                         <?php else: ?>
                         <?php if($user !== null && $user['role'] !== 'admin'): ?>
@@ -151,7 +150,8 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
         </div>
          
         </div>
-      </div>
+      
 <?php include "footer.php"?>
+</div>
 </body>
 </html>

@@ -2,13 +2,10 @@
 session_start();
 include "functions.php";  
 
-if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
-    header("Location: login.php");
+if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
+    header("Location: asztrofotok.php");
     exit();
-}
-
-$user = loadUser($conn, $_SESSION["user"]["username"]);
-
+  }
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +32,7 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
                 <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
                 <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
                 <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
-                        <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
+                        <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                         <?php else: ?>
                         <?php if($user !== null && $user['role'] !== 'admin'): ?>
@@ -52,7 +49,7 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
         </div>
     </header>
     <input type="checkbox" id="toggle">
-
+    <div class="container container">
     <div id="header">
         <h1 id="astro-title">Szegedi asztrofotók</h1>
         <br />
@@ -143,15 +140,14 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
         </video>
     </p>
 </div>
-
-<div id="footer">
-    <span id="source-title">Forrás:</span>
-    <a href="https://en.wikipedia.org/wiki/Astrophotography" target="_blank">Wikipedia</a>
-    <br />
-    <br />
-    Kulcsszavak: <b>Bolygók </b><b>Csillagok </b><b>Galaxisok </b><b>Meteorok </b><b>Asztrofotók </b>
-<br>
-</div>
+<span id="source-title">Forrás:</span>
+<a href="https://en.wikipedia.org/wiki/Astrophotography" target="_blank">Wikipedia</a>
+<br/>
+<br/>
+Kulcsszavak: <b>Bolygók </b><b>Csillagok </b><b>Galaxisok </b><b>Meteorok </b><b>Asztrofotók </b>
+<br/>
+<br/>
 <?php include "footer.php"?>
+</div>
 </body> 
 </html>

@@ -2,21 +2,20 @@
     session_start();
     include "functions.php";  
     
-    if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
-        header("Location: login.php");
+    if(isset($_SESSION["user"]) || !empty($_SESSION["user"])){
+        header("Location: index.php");
         exit();
     }
     
-    $user = loadUser($conn, $_SESSION["user"]["username"]);
 
-    $latogatasok = 1; // hányszor látogattuk meg a weboldalt eddig
+    $latogatasok = 1; // hányszor látogattuk meg a weboldalt
 
     // ha már van egy, az eddigi látogatások számát tároló sütink, akkor betöltjük annak az értékét
     if (isset($_COOKIE["visits"])) {
         $latogatasok = $_COOKIE["visits"] + 1;  // az eddigi látogatások számát megnöveljük 1-gyel
     }
 
-    // egy "visits" nevű süti a látogatásszám tárolására, amelynek élettartama 30 nap
+    // süti a látogatásszám tárolása
     setcookie("visits", $latogatasok, time() + (60*60*24*30), "/");
 ?>
 
@@ -40,7 +39,7 @@
                 <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
                 <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
                 <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
-                        <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
+                        <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                         <?php else: ?>
                         <?php if($user !== null && $user['role'] !== 'admin'): ?>
@@ -56,6 +55,8 @@
         </nav>
         </div>
 </header>
+<input type="checkbox" id="toggle">
+<div class="container container">
 <main>
 <?php
 if ($latogatasok > 1) {     // már járt az oldalon
@@ -85,5 +86,6 @@ if ($latogatasok > 1) {     // már járt az oldalon
     ?>
 </main>
 <?php include "footer.php"?>
+</div>
 </body>
 </html>
