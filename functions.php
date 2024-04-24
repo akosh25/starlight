@@ -2,7 +2,7 @@
 //mySQL
 $servername = "localhost";
 $username = "root";
-$password = "starlight25+"; 
+$password = ""; 
 $dbname = "starlight"; 
 
 // mySQL kapcsolat
