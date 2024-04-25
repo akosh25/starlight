@@ -31,10 +31,10 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
                     <li><a href="index.php" class="menu-item"><img src="img/home.png" alt="Kezdőoldal" class="menu-image kezdo-kep"></a></li>
                     <li><a href="asztrofotok.php" class="menu-item">Asztro fotók</a></li>
                     <li><a href="amateur.php" class="menu-item">Infók</a></li>
-                    <li><a href="egyesulet.php" class="menu-item">Egyesületi élet</a></li>
+                    <li><a href="egyesulet.php" class="menu-item">Egyesület</a></li>
                     <li><a href="contact.php" class="menu-item">Kapcsolat</a></li>
                     <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
-                        <li><a href="login.php" class="menu-item active">Bejelentkezés</a></li>
+                        <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
                         <?php else: ?>
                         <?php if($user !== null && $user['role'] !== 'admin'): ?>
@@ -42,7 +42,8 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
                         <?php else: ?>
                             <li><a href="admin.php">Admin</a></li>
                         <?php endif; ?>
-                        <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
+                        <li><a href="upload_form.php" class="menu-item active">Asztrofotó beküldés</a></li>
+                        <li><a href="chat.php" class="menu-item">Chat</a></li>
                         <li><a href="logout.php">Kijelentkezés</a></li>
                         <?php endif; ?>
                     <li></li>

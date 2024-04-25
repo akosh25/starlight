@@ -6,8 +6,104 @@
         header("Location: index.php");
         exit();
     }
-?>
 
+    $errors = [];
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["signup"])) {
+        // Felhasználónév ellenőrzése
+        if (empty($_POST["username"]) || strpos($_POST["username"], ' ') !== false) {
+            $errors[] = "Hibás felhasználónév.";
+        }
+        // Jelszó ellenőrzése
+        $password = $_POST["password"];
+        $password2 = $_POST["password2"];
+        if (empty($password) || empty($password2)) {
+            $errors[] = "A jelszó mezők kitöltése kötelező.";
+        } elseif ($password !== $password2) {
+            $errors[] = "A két jelszó nem egyezik.";
+        }
+
+        // Születési dátum ellenőrzése
+        $szulev = $_POST["szulev"];
+        if (empty($szulev) || !strtotime($szulev)) {
+            $errors[] = "Hibás születési dátum.";
+        }
+
+        // Kor ellenőrzése
+        $age = $_POST["age"];
+        if (!is_numeric($age) || $age <= 0) {
+            $errors[] = "A kor nem lehet 0 vagy annál kisebb szám.";
+        }
+
+        // Ha nincs hibaüzenet, akkor feldolgozás
+        if (empty($errors)) {
+            // Feldolgozás és mentés
+            $user = $_POST["username"];
+            $pass = $_POST["password"];
+            $nev = $_POST["nev"];
+            $szulev = $_POST["szulev"];
+            $age = $_POST["age"];
+            $gender = $_POST["gender"];
+            $role = $_POST["role"];
+
+            // Alapértelmezett profilkép
+            $profile_pic = "img/default_profile.jpg"; 
+
+            if(isset($_FILES['profile-pic']['tmp_name']) && !empty($_FILES['profile-pic']['tmp_name'])) {
+                $target_dir = "uploads/";
+                $target_file = $target_dir . basename($_FILES["profile-pic"]["name"]);
+
+                // Kiterjesztés check
+                $kiterjesztes = strtolower(pathinfo($_FILES["profile-pic"]["name"], PATHINFO_EXTENSION));
+                if (!in_array($kiterjesztes, ['jpg', 'jpeg', 'png'])) {
+                    $errors[] = "Csak JPG, JPEG és PNG formátumú képek engedélyezettek.";
+                }
+                
+                // Méret check
+                if ($_FILES["profile-pic"]["size"] > 31457280) {
+                    $errors[] = "A fájl mérete nem lehet nagyobb 30 MB-nál.";
+                }
+
+                if(move_uploaded_file($_FILES["profile-pic"]["tmp_name"], $target_file)) {
+                    $profile_pic = $target_file;
+                } else {
+                    $errors[] = "Hiba történt a kép feltöltésekor.";
+                }
+            }
+            
+            if (count($errors) === 0) {
+                // A felhasználó adatainak mentése
+                $user_data = [
+                    'username' => $user,
+                    'password' => $pass,
+                    'nev' => $nev,
+                    'szulev' => $szulev,
+                    'age' => $age,
+                    'gender' => $gender,
+                    'role' => $role,
+                    'profile_pic' => $profile_pic
+                ];
+
+                saveUser($conn, $user_data);
+
+                // Ha van feltöltött profilkép, akkor azt beállítjuk a $_SESSION változóban
+                if(!empty($user_data['profile_pic'])) {
+                    $_SESSION['user']['profile_pic'] = $user_data['profile_pic'];
+                }
+
+                // Felhasználó adatainak frissítése
+                updateUserProfile($conn, $user, $pass, $profile_pic, $role);
+                
+                // A felhasználó adatainak elmentése a session-be
+                $_SESSION['user'] = $user_data;
+
+                // Átirányítás az index.php oldalra
+                header('Location: index.php');
+                exit();
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -63,89 +159,15 @@
         </form>
 
         <?php
-            $errors = [];
-
-            if(isset($_POST["signup"])){
-                // Profilkép feltöltése
-                if(isset($_FILES['profile-pic']['tmp_name']) && !empty($_FILES['profile-pic']['tmp_name'])) {
-                    $target_dir = "uploads/";
-                    $target_file = $target_dir . basename($_FILES["profile-pic"]["name"]);
-
-                    // Kiterjesztés check
-                    $kiterjesztes = strtolower(pathinfo($_FILES["profile-pic"]["name"], PATHINFO_EXTENSION));
-                    if (!in_array($kiterjesztes, ['jpg', 'jpeg', 'png'])) {
-                        $errors[] = "Csak JPG, JPEG és PNG formátumú képek engedélyezettek.";
-                    }
-                    
-                    // Méret check
-                    if ($_FILES["profile-pic"]["size"] > 31457280) {
-                        $errors[] = "A fájl mérete nem lehet nagyobb 30 MB-nál.";
-                    }
-
-                    if(move_uploaded_file($_FILES["profile-pic"]["tmp_name"], $target_file)) {
-                        $profile_pic = $target_file;
-                    } else {
-                        $errors[] = "Hiba történt a kép feltöltésekor.";
-                    }
-                } else {
-                    $profile_pic = "img/default_profile.jpg"; // Alapértelmezett kép
+            // Hibák megjelenítése
+            if (!empty($errors)) {
+                echo '<div class="error-message">';
+                echo '<ul>';
+                foreach ($errors as $error) {
+                    echo '<li>' . $error . '</li>';
                 }
-
-                
-                
-                $user = $_POST["username"];
-                $pass = $_POST["password"];
-                $pass2 = $_POST["password2"];
-                $nev = $_POST["nev"];
-                $szulev = $_POST["szulev"];
-                $age = $_POST["age"];
-                $gender = $_POST["gender"];
-                $role = $_POST["role"];
-
-                $user_data = [
-                    'username' => $user,
-                    'password' => $pass,
-                    'nev' => $nev,
-                    'szulev' => $szulev,
-                    'age' => $age,
-                    'gender' => $gender,
-                    'role' => $role,
-                    'profile_pic' => $profile_pic
-                ];
-
-                // Kor check
-                if($age <= 0) {
-                    $errors[] = "A kor nem lehet 0 vagy annál kisebb szám.";
-                }
-                
-                // Ha nincs hiba, mentés
-                if (count($errors) === 0) {
-                    saveUser($conn, $user_data);
-                    if(!empty($user_data['profile_pic'])) {
-                        // Ha van feltöltött profilkép, akkor azt beállítjuk a $_SESSION változóban
-                        $_SESSION['user']['profile_pic'] = $user_data['profile_pic'];
-                    }
-                 
-                    // update
-                    updateUserProfile($conn, $user, $pass, $profile_pic, $role);
-                    
-                    // Elmentjük a felhasználó adatait a session-be
-                    $_SESSION['user'] = $user_data;
-
-                    sleep(3);
-
-                    // újrabetöltés
-                    header('Location: index.php');
-                    exit();
-
-                 } else {
-                    // Hibák megjelenítése
-                    echo "<ul>";
-                    foreach ($errors as $error) {
-                        echo "<li>" . $error . "</li>";
-                    }
-                    echo "</ul>";
-                 }
+                echo '</ul>';
+                echo '</div>';
             }
         ?>
     </section>

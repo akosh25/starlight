@@ -90,9 +90,9 @@ function updateUserBirthdate($conn, $username, $newBirthdate) {
     }
 }
 
-function updateUserProfile($conn, $username, $newPassword, $newProfilePic, $newRole) {
+function updateUserProfile($conn, $username, $newPassword, $newProfilePic) {
     // empty check
-    if(empty($username) || (empty($newPassword) && empty($newProfilePic) && empty($newRole))) {
+    if(empty($username) || (empty($newPassword) && empty($newProfilePic))){
         return false;
     }
 
@@ -180,5 +180,37 @@ function loadAllUsers($conn) {
     }
 
     return $users;
+}
+
+function sendMessage($conn, $sender_username, $receiver_username, $message) {
+    // üzenet tárolása az adatbázisban
+    $sql = "INSERT INTO messages (sender_username, receiver_username, message) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $sender_username, $receiver_username, $message);
+    
+    if ($stmt->execute()) {
+        return true; // sikeres üzenetküldés
+    } else {
+        return false; // sikertelen üzenetküldés
+    }
+}
+
+function getMessages($conn, $username) {
+    $messages = array();
+
+    // Lekérdezzük az üzeneteket, amelyeket a felhasználó kapott
+    $sql = "SELECT * FROM messages WHERE receiver_username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $messages[] = $row;
+        }
+    }
+
+    return $messages;
 }
 ?>
