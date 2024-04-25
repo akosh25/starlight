@@ -8,7 +8,7 @@ $dbname = "starlight";
 // mySQL kapcsolat
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Ellenőrzés, hogy sikeres-e a kapcsolat
+// sikeres-e a kapcsolat
 if ($conn->connect_error) {
     die("Sikertelen kapcsolódás: " . $conn->connect_error);
 }
@@ -134,7 +134,7 @@ function updateUserProfile($conn, $username, $newPassword, $newProfilePic, $newR
 }
 
 function banUser($conn, $username) {
-    // Ellenőrizzük, hogy a felhasználó nem admin
+    // admin-e?
     $sql = "SELECT role FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -144,17 +144,17 @@ function banUser($conn, $username) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if ($row['role'] !== 'admin') {
-            // Ha a felhasználó nem admin, akkor tiltjuk
+            // ha nem admin akkor tiltjuk:
             $sql = "UPDATE users SET banned = 1 WHERE username = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("s", $username);
             $stmt->execute();
         } else {
-            // Ha a felhasználó admin, nem végezzük el a tiltást
-            echo "Adminisztrátorok nem tiltásra kerülhetnek.";
+            // ha admin akkor nem tiltható
+            echo "Adminisztrátorokat nem lehet letiltani.";
         }
     } else {
-        // Ha a felhasználó nem található az adatbázisban, hibát jelzünk
+        //a felhasználó nincs az adatbázisban
         echo "Hiba történt a felhasználó keresésekor.";
     }
 }

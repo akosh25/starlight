@@ -71,13 +71,13 @@
                     $target_dir = "uploads/";
                     $target_file = $target_dir . basename($_FILES["profile-pic"]["name"]);
 
-                    // Kiterjesztés ellenőrzése
+                    // Kiterjesztés check
                     $kiterjesztes = strtolower(pathinfo($_FILES["profile-pic"]["name"], PATHINFO_EXTENSION));
                     if (!in_array($kiterjesztes, ['jpg', 'jpeg', 'png'])) {
                         $errors[] = "Csak JPG, JPEG és PNG formátumú képek engedélyezettek.";
                     }
                     
-                    // Méret ellenőrzése
+                    // Méret check
                     if ($_FILES["profile-pic"]["size"] > 31457280) {
                         $errors[] = "A fájl mérete nem lehet nagyobb 30 MB-nál.";
                     }
@@ -113,7 +113,7 @@
                     'profile_pic' => $profile_pic
                 ];
 
-                // Kor ellenőrzése
+                // Kor check
                 if($age <= 0) {
                     $errors[] = "A kor nem lehet 0 vagy annál kisebb szám.";
                 }
@@ -134,7 +134,7 @@
 
                     sleep(3);
 
-                    // Átirányítás
+                    // újrabetöltés
                     header('Location: index.php');
                     exit();
 

@@ -57,14 +57,22 @@
     if(isset($_POST["login"])){
         $user = $_POST["username"];
         $pass = $_POST["password"];
+        
         $user_data = loadUser($conn, $user);
+        if($user_data){
+            $banned = $user_data['banned'];
     
-        if($user_data && password_verify($pass, $user_data["password"])){
-            $_SESSION["user"] = $user_data;
-            header("Location: admin.php");
-            exit();
+            if($banned){
+                echo "A felhasználó le lett tiltva! Keresd meg az adminisztrátort";
+            } else if(password_verify($pass, $user_data["password"])){
+                $_SESSION["user"] = $user_data;
+                header("Location: admin.php");
+                exit();
+            } else {
+                echo "Sikertelen belépés.";
+            }
         } else {
-            echo "Sikertelen belépés";
+            echo "Sikertelen belépés.";
         }
     }
     ?>

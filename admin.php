@@ -2,23 +2,53 @@
 session_start();
 include "functions.php";  
 
+//user check
 if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
     header("Location: login.php");
     exit();
 }
 
+// Tiltás gomb 
+if(isset($_POST['ban_user'])) {
+// van-e felhasználónév
+if(isset($_POST['username'])) {
+    $username_to_ban = $_POST['username'];
+    // tiltunk
+    banUser($conn, $username_to_ban);
+    // eltároljuk a tiltást üzenetben
+    $_SESSION['ban_message'] = "A felhasználó sikeresen le lett tiltva.";
+} else {
+    // oldal újratöltése 
+    header("Location: admin.php");
+    exit();
+}
+} else if(isset($_POST['unban_user'])) { // tiltás visszavonása
+// van-e felhasználónév
+if(isset($_POST['username'])) {
+    $username_to_unban = $_POST['username'];
+    // visszavonjuk a tiltást
+    unbanUser($conn, $username_to_unban);
+    // oldal újratöltése
+    header("Location: admin.php");
+    exit();
+} else {
+    // hibajelentés
+    echo "Hiba: Nem sikerült megadni a tiltás visszavonandó felhasználónevet.";
+}
+}
+
 $user = loadUser($conn, $_SESSION["user"]["username"]);
 
-// Ellenőrizzük, hogy a felhasználó adminisztrátor-e
+// admin?
 if($user !== null && $user['role'] !== 'admin') {
-    // Ha nem adminisztrátor
+    // ha nem:
     header("Location: profile.php");
     exit();
 }
 
-// Ha a felhasználó létezik az adatbázisban és van profilképe
+// a user létezik és van profilképe
 if($user !== null && !empty($user['profile_pic'])) {
-    // A profilképet beállítjuk a $_SESSION változóban, hogy elérhető legyen más oldalakon is
+    // profilkép beállítása
     $_SESSION['user']['profile_pic'] = $user['profile_pic'];
 }
 ?>
@@ -156,10 +186,10 @@ if($user !== null && !empty($user['profile_pic'])) {
                         <th>Le van tiltva?</th>
                     </tr>
                     <?php
-                    // Betöltjük az összes felhasználót az adatbázisból
+                    // felhasználók betöltése
                     $users = loadAllUsers($conn);
 
-                    // Kilistázzuk a felhasználókat és adataikat
+                    // felhasználói adatok listázása
                     foreach($users as $user) {  
                         echo "<tr>";
                         echo "<td>".$user['username']."</td>";
@@ -178,10 +208,7 @@ if($user !== null && !empty($user['profile_pic'])) {
                         echo "<td>";
                         if(isset($user['banned'])) {
                             echo ($user['banned'] == 1 ? "Igen" : "Nem");
-                        } else {
-                            // Ha nincs "banned" oszlop, akkor csak üres cellát hagyunk
-                            echo "";
-                        }
+                        };
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -194,38 +221,8 @@ if($user !== null && !empty($user['profile_pic'])) {
     <?php
     //törlés gomb
     echo '<form id="form-login" class="login-link" action="delete_user.php" method="POST">
-        <input type="submit" name="btn-delete-user"  value="felhasználói fiók törlése">
-        </form>';
-    ?>
-    <?php
-    // Tiltás gombra kattintva
-    if(isset($_POST['ban_user'])) {
-        // Ellenőrizzük, hogy van-e megadva felhasználónév
-        if(isset($_POST['username'])) {
-            $username_to_ban = $_POST['username'];
-            // Végrehajtjuk a tiltást a megadott felhasználónév alapján
-            banUser($conn, $username_to_ban);
-            //frissítünk
-            header("Location: admin.php");
-            exit();
-        } else {
-            // Ha nincs felhasználónevet megadva, jelentsünk hibát
-            echo "Hiba: Nem sikerült megadni a tiltandó felhasználónevet.";
-        }
-    } else if(isset($_POST['unban_user'])) { // Ha a "Tiltás visszavonása" gombra kattintottak
-        // Ellenőrizzük, hogy van-e megadva felhasználónév
-        if(isset($_POST['username'])) {
-            $username_to_unban = $_POST['username'];
-            // Végrehajtjuk a tiltás visszavonását a megadott felhasználónév alapján
-            unbanUser($conn, $username_to_unban);
-            // Frissítjük az oldalt az új adatokkal
-            header("Location: admin.php");
-            exit();
-        } else {
-            // Ha nincs felhasználónevet megadva, jelentsünk hibát
-            echo "Hiba: Nem sikerült megadni a tiltás visszavonandó felhasználónevet.";
-        }
-    }
+    <input type="submit" name="btn-delete-user"  value="felhasználói fiók törlése">
+    </form>';
     ?>
     <?php include "footer.php";?>
 </body>
