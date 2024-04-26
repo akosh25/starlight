@@ -1,4 +1,4 @@
-Az adatokat MySQL-t használva 2 SQL táblátban tároljuk "photos" és "users" néven. 
+Az adatokat MySQL-t használva 3 SQL táblátban tároljuk "photos", "users" és "messages" néven. 
 Az adatbázist "starlight" néven kell létrehozni. 
 
 A csatlakozási információkat a functions.php fájl elején tároljuk el változókban:
