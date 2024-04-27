@@ -108,7 +108,7 @@ if($user !== null && !empty($user['profile_pic'])) {
                     </tr>
                     <tr>
                         <td>Profilkép:</td>
-                        <td><img src="<?=$_SESSION['user']['profile_pic']?>" alt="Profilkép"></td>
+                        <td><img src="<?= $_SESSION['user']['profile_pic'] ?>" alt="Profilkép" width="80" height="100"></td>
                     </tr>
                     <tr>
                         <td>Profilkép módosítása:</td>
