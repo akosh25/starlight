@@ -189,8 +189,6 @@ if($user !== null && !empty($user['profile_pic'])) {
                         <th>Le van tiltva?</th>
                     </tr>
                     <?php
-                    // felhasználók betöltése
-                    $users = loadAllUsers($conn);
 
                     // felhasználói adatok listázása
                     foreach($users as $user) {  

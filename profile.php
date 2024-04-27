@@ -149,8 +149,6 @@ if($user !== null && !empty($user['profile_pic'])) {
                         <th>Profilkép</th>
                     </tr>
                     <?php
-                    // Betöltjük az összes felhasználót az adatbázisból
-                    $users = loadAllUsers($conn);
 
                     // Kilistázzuk a felhasználókat és adataikat
                     foreach($users as $user) {  
