@@ -8,13 +8,14 @@ if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
 }
 
 $user = loadUser($conn, $_SESSION["user"]["username"]);
+$userPhotos = loadUserPhotos($conn, $_SESSION["user"]["username"]);
 
-
-// Ha a felhasználó létezik az adatbázisban és van profilképe
+// profilkép check
 if($user !== null && !empty($user['profile_pic'])) {
     // A profilképet beállítjuk a $_SESSION változóban, hogy elérhető legyen más oldalakon is
     $_SESSION['user']['profile_pic'] = $user['profile_pic'];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -135,6 +136,9 @@ if($user !== null && !empty($user['profile_pic'])) {
                             ?>
                         </td>
                     </tr>
+
+                    
+
                 </table>
             </td>
             <td>
@@ -157,6 +161,26 @@ if($user !== null && !empty($user['profile_pic'])) {
                 </table>
             </td>
         </tr>
+        <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <th colspan="2">Beküldött asztrofotóim</th>
+                        </tr>
+                        <?php
+                        // feltöltött asztrofotók
+                        if (empty($userPhotos)) {
+                            echo "<tr><td colspan='2'>Még nem küldtél be asztrofotót!</td></tr>";
+                        } else {
+                            foreach ($userPhotos as $photo) {
+                                echo "<tr><td>Kép címe:</td><td>" . $photo['title'] . "</td></tr>";
+                                echo "<tr><td>Dátum:</td><td>" . $photo['upload_date'] . "</td></tr>";
+                            }
+                        }
+                        ?>
+                    </table>
+                </td>
+            </tr>
     </table>
 </div>
     
@@ -172,20 +196,20 @@ if($user !== null && !empty($user['profile_pic'])) {
         // Ellenőrizzük, hogy van-e megadva felhasználónév
         if(isset($_POST['username'])) {
             $username_to_ban = $_POST['username'];
-            // Végrehajtjuk a tiltást a megadott felhasználónév alapján
+            // tiltás
             banUser($conn, $username_to_ban);
         } else {
-            // Ha nincs felhasználónevet megadva, jelentsünk hibát
+            // nincs felhasználónév
             echo "Hiba: Nem sikerült megadni a tiltandó felhasználónevet.";
         }
-    } else if(isset($_POST['unban_user'])) { // Ha a "Tiltás visszavonása" gombra kattintottak
-        // Ellenőrizzük, hogy van-e megadva felhasználónév
+    } else if(isset($_POST['unban_user'])) { // tiltás visszavonása
+        // van-e felhasználó
         if(isset($_POST['username'])) {
             $username_to_unban = $_POST['username'];
-            // Végrehajtjuk a tiltás visszavonását a megadott felhasználónév alapján
+            // tiltás visszavonás
             unbanUser($conn, $username_to_unban);
         } else {
-            // Ha nincs felhasználónevet megadva, jelentsünk hibát
+            // ha nincs felhasználó
             echo "Hiba: Nem sikerült megadni a tiltás visszavonandó felhasználónevet.";
         }
     } 

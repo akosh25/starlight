@@ -213,4 +213,35 @@ function getMessages($conn, $username) {
 
     return $messages;
 }
+
+function loadUserPhotos($conn, $username) {
+    $photos = array();
+
+    // Felhasználó azonosítása az username alapján
+    $user_id_query = "SELECT id FROM users WHERE username = ?";
+    $stmt = $conn->prepare($user_id_query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $user_id = $row['id'];
+
+        // Lekérdezzük az összes fotót az adott felhasználóhoz tartozó user_id alapján
+        $sql = "SELECT * FROM photos WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $photos[] = $row;
+            }
+        }
+    }
+
+    return $photos;
+}
 ?>

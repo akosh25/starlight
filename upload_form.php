@@ -64,7 +64,7 @@ $user = loadUser($conn, $_SESSION["user"]["username"]);
         </div>
 
         <form action="upload_form.php" method="post" enctype="multipart/form-data" autocomplete="off">
-            <label for="nev">Név: <input type="text" name="nev" id="nev"></label>
+            <label for="nev">Név: <input type="text" name="nev" id="nev" value="<?php echo $user['nev']; ?>"></label>
             <br>
             <label for="fotodatum">Mikor készült a kép?: <input type="date" name="fotodatum" id="fotodatum"></label>
             <br>
