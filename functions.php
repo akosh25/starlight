@@ -183,7 +183,7 @@ function loadAllUsers($conn) {
 }
 
 function sendMessage($conn, $sender_username, $receiver_username, $message) {
-    // üzenet tárolása az adatbázisban
+    // üzenet mentése
     $sql = "INSERT INTO messages (sender_username, receiver_username, message) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $sender_username, $receiver_username, $message);
@@ -198,7 +198,7 @@ function sendMessage($conn, $sender_username, $receiver_username, $message) {
 function getMessages($conn, $username) {
     $messages = array();
 
-    // Lekérdezzük az üzeneteket, amelyeket a felhasználó kapott
+    // üzenet lekérdezés
     $sql = "SELECT * FROM messages WHERE receiver_username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -217,7 +217,7 @@ function getMessages($conn, $username) {
 function loadUserPhotos($conn, $username) {
     $photos = array();
 
-    // Felhasználó azonosítása az username alapján
+    // username lekérés
     $user_id_query = "SELECT id FROM users WHERE username = ?";
     $stmt = $conn->prepare($user_id_query);
     $stmt->bind_param("s", $username);
@@ -228,7 +228,7 @@ function loadUserPhotos($conn, $username) {
         $row = $result->fetch_assoc();
         $user_id = $row['id'];
 
-        // Lekérdezzük az összes fotót az adott felhasználóhoz tartozó user_id alapján
+        // user_id alapján lekérés
         $sql = "SELECT * FROM photos WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $user_id);
