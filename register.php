@@ -92,7 +92,7 @@
                 }
 
                 // Felhasználó adatainak frissítése
-                updateUserProfile($conn, $user, $pass, $profile_pic, $role);
+                updateUserProfile($conn, $user, $pass, $profile_pic);
                 
                 // A felhasználó adatainak elmentése a session-be
                 $_SESSION['user'] = $user_data;
