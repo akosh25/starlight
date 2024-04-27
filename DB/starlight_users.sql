@@ -35,7 +35,7 @@ CREATE TABLE `users` (
   `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `banned` int DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (13,'user','Daniel','$2y$10$kjot49xBzdofQlfyPzGiVOVOobISMLhkAcqoFM9VDCg/eaAMe6Hva','Daniel Jackson','2012-12-12',34,'m','uploads/dj2.jpg','2024-04-14 19:36:12',0),(27,'admin','Jack','$2y$10$jlmHnsrkHic0FPU9Lk8/W.0IGOZbfbNZyrA5.P0o0bIrtM0aRqrSm','Jack O\'Neill','1960-10-10',64,'m','uploads/Oneilljack.jpg','2024-04-23 13:42:26',0),(28,'user','Dan','$2y$10$qHHzR2Gef5hpTnFKjr3rKeqMiaoi0zQFgoZjyOUv0RylEfQpXNpfy','Daniel J','1950-10-10',74,'m','uploads/dj.jpg','2024-04-23 15:01:40',0);
+INSERT INTO `users` VALUES (13,'user','Daniel','$2y$10$kjot49xBzdofQlfyPzGiVOVOobISMLhkAcqoFM9VDCg/eaAMe6Hva','Daniel Jackson','2012-12-12',34,'m','uploads/dj2.jpg','2024-04-14 19:36:12',0),(27,'admin','Jack','$2y$10$jlmHnsrkHic0FPU9Lk8/W.0IGOZbfbNZyrA5.P0o0bIrtM0aRqrSm','Jack O\'Neill','1960-10-10',64,'m','uploads/Oneilljack.jpg','2024-04-23 13:42:26',0),(28,'user','Dan','$2y$10$qHHzR2Gef5hpTnFKjr3rKeqMiaoi0zQFgoZjyOUv0RylEfQpXNpfy','Daniel J','1950-10-10',74,'m','uploads/dj.jpg','2024-04-23 15:01:40',0),(30,'admin','Sam','$2y$10$O7fjqKCjapQExNU8colooevW0I8f/o3o8bj/VYAoyOhgPam1k5rVC','Sam Carter','1980-10-10',44,'f','uploads/sam.jpg','2024-04-27 13:21:00',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-25 19:47:44
+-- Dump completed on 2024-04-27 15:22:13

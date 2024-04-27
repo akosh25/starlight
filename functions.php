@@ -45,11 +45,10 @@ function saveUser($conn, $user){
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (username, password, nev, szulev, age, gender, profile_pic) 
-           VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (username, password, nev, szulev, age, gender, role, profile_pic) 
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiss", $username, $hashed_password, $nev, $szulev, $age, $gender, $profile_pic);
-
+    $stmt->bind_param("ssssisss", $username, $hashed_password, $nev, $szulev, $age, $gender, $role, $profile_pic);
     if ($stmt->execute()) {
         echo "Sikeres regisztráció!";
     } else {
