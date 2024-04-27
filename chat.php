@@ -17,6 +17,7 @@ if($user !== null && !empty($user['profile_pic'])) {
 
 // Felhasználók lekérdezése az adatbázisból
 $users = loadAllUsers($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +40,16 @@ $users = loadAllUsers($conn);
                     <?php if(!isset($_SESSION["user"]) || empty($_SESSION["user"])): ?>
                         <li><a href="login.php" class="menu-item">Bejelentkezés</a></li>
                         <li><a href="register.php" class="menu-item">Regisztráció</a></li>
-                    <?php else: ?>
-                        <li><a href="profile.php">Felhasználó</a></li>
+                        <?php else: ?>
+                        <?php if($user !== null && $user['role'] !== 'admin'): ?>
+                            <li><a href="profile.php">Felhasználó</a></li>
+                        <?php else: ?>
+                            <li><a href="admin.php">Admin</a></li>
+                        <?php endif; ?>
                         <li><a href="upload_form.php" class="menu-item">Asztrofotó beküldés</a></li>
                         <li><a href="chat.php" class="menu-item active">Chat</a></li>
                         <li><a href="logout.php">Kijelentkezés</a></li>
-                    <?php endif; ?>
+                        <?php endif; ?>
                     <li></li>
                 </ul>   
             </nav>

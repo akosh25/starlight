@@ -9,6 +9,7 @@ if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
 
 $user = loadUser($conn, $_SESSION["user"]["username"]);
 $userPhotos = loadUserPhotos($conn, $_SESSION["user"]["username"]);
+$users = loadAllUsers($conn);
 
 // profilkép check
 if($user !== null && !empty($user['profile_pic'])) {

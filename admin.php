@@ -10,34 +10,36 @@ if(!isset($_SESSION["user"]) || empty($_SESSION["user"])){
 
 // Tiltás gomb 
 if(isset($_POST['ban_user'])) {
-// van-e felhasználónév
-if(isset($_POST['username'])) {
-    $username_to_ban = $_POST['username'];
-    // tiltunk
-    banUser($conn, $username_to_ban);
-    // eltároljuk a tiltást üzenetben
-    $_SESSION['ban_message'] = "A felhasználó sikeresen le lett tiltva.";
-} else {
-    // oldal újratöltése 
-    header("Location: admin.php");
-    exit();
-}
-} else if(isset($_POST['unban_user'])) { // tiltás visszavonása
-// van-e felhasználónév
-if(isset($_POST['username'])) {
-    $username_to_unban = $_POST['username'];
-    // visszavonjuk a tiltást
-    unbanUser($conn, $username_to_unban);
-    // oldal újratöltése
-    header("Location: admin.php");
-    exit();
-} else {
-    // hibajelentés
-    echo "Hiba: Nem sikerült megadni a tiltás visszavonandó felhasználónevet.";
-}
+    // van-e felhasználónév
+    if(isset($_POST['username'])) {
+        $username_to_ban = $_POST['username'];
+        // tiltunk
+        banUser($conn, $username_to_ban);
+        // eltároljuk a tiltást üzenetben
+        $_SESSION['ban_message'] = "A felhasználó sikeresen le lett tiltva.";
+    } else {
+        // oldal újratöltése 
+        header("Location: admin.php");
+        exit();
+    }
+
+    } else if(isset($_POST['unban_user'])) { // tiltás visszavonása
+    // van-e felhasználónév
+    if(isset($_POST['username'])) {
+        $username_to_unban = $_POST['username'];
+        // visszavonjuk a tiltást
+        unbanUser($conn, $username_to_unban);
+        // oldal újratöltése
+        header("Location: admin.php");
+        exit();
+    } else {
+        // hibajelentés
+        echo "Hiba: Nem sikerült megadni a tiltás visszavonandó felhasználónevet.";
+    }
 }
 
 $user = loadUser($conn, $_SESSION["user"]["username"]);
+$users = loadAllUsers($conn);
 
 // admin?
 if($user !== null && $user['role'] !== 'admin') {
@@ -147,7 +149,7 @@ if($user !== null && !empty($user['profile_pic'])) {
                     </tr>
                     <tr>
                         <td>Profilkép:</td>
-                        <td><img src="<?=$_SESSION['user']['profile_pic']?>" alt="Profilkép"></td>
+                        <td><img src="<?= $_SESSION['user']['profile_pic'] ?>" alt="Profilkép" width="80" height="100"></td>
                     </tr>
                     <tr>
                         <td>Profilkép módosítása:</td>
